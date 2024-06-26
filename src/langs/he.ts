@@ -227,5 +227,5 @@ export default {
 	rename: 'הונגרית',
 	'Enter new name': 'הזן שם חדש',
 	preview: 'תצוגה מקדימה',
-	download: 'הורד',
+	download: 'הורד'
 } as IDictionary<string>;

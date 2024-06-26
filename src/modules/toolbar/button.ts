@@ -76,8 +76,13 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 		);
 	}
 
-	private onMouseDown = (originalEvent: MouseEvent | KeyboardEvent): false | void => {
-		if (originalEvent.type === 'keydown' && originalEvent.which !== KEY_ENTER) {
+	private onMouseDown = (
+		originalEvent: MouseEvent | KeyboardEvent
+	): false | void => {
+		if (
+			originalEvent.type === 'keydown' &&
+			originalEvent.which !== KEY_ENTER
+		) {
 			return;
 		}
 
@@ -109,8 +114,17 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			this.jodit.events.on(list, 'afterClose', () => {
 				this.anchor.setAttribute('aria-expanded', 'false');
 			});
-		} else if (control.exec !== undefined && typeof control.exec === 'function') {
-			control.exec(this.jodit, getTarget(), control, originalEvent, this.container as HTMLLIElement);
+		} else if (
+			control.exec !== undefined &&
+			typeof control.exec === 'function'
+		) {
+			control.exec(
+				this.jodit,
+				getTarget(),
+				control,
+				originalEvent,
+				this.container as HTMLLIElement
+			);
 
 			this.jodit.events.fire('synchro');
 
@@ -124,7 +138,8 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			 */
 			this.jodit.events.fire('closeAllPopups afterExec');
 		} else if (
-			control.popup !== undefined && typeof control.popup === 'function'
+			control.popup !== undefined &&
+			typeof control.popup === 'function'
 		) {
 			const popup: Popup = new Popup(
 				this.jodit,
@@ -163,7 +178,7 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			 */
 			this.jodit.events.fire(
 				camelCase('after-' + control.name + '-OpenPopup') +
-				' closeAllPopups',
+					' closeAllPopups',
 				popup.container
 			);
 		} else {
@@ -192,8 +207,12 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			return '';
 		}
 
-		return this.jodit.i18n(this.control.tooltip) +
-			(this.control.hotkeys ? '<br>' + asArray(this.control.hotkeys).join(' ') : '');
+		return (
+			this.jodit.i18n(this.control.tooltip) +
+			(this.control.hotkeys
+				? '<br>' + asArray(this.control.hotkeys).join(' ')
+				: '')
+		);
 	}
 
 	focus() {
@@ -211,8 +230,8 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 		this.target = target;
 
 		this.anchor = this.jodit.create.element('a', {
-			"role": "button",
-			"href": "javascript:void(0)"
+			role: 'button',
+			href: 'javascript:void(0)'
 		});
 
 		let tabIndex = '-1';
@@ -249,7 +268,9 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			);
 		} else {
 			if (control.list && this.anchor) {
-				const trigger = this.jodit.create.fromHTML(ToolbarIcon.getIcon('dropdown-arrow'));
+				const trigger = this.jodit.create.fromHTML(
+					ToolbarIcon.getIcon('dropdown-arrow')
+				);
 				trigger.classList.add('jodit_with_dropdownlist-trigger');
 
 				this.container.classList.add('jodit_with_dropdownlist');
@@ -264,7 +285,8 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 		if (this.jodit.options.direction) {
 			const direction = this.jodit.options.direction.toLowerCase();
 
-			this.container.style.direction = direction === 'rtl' ? 'rtl' : 'ltr';
+			this.container.style.direction =
+				direction === 'rtl' ? 'rtl' : 'ltr';
 		}
 
 		if (control.isInput) {
@@ -282,7 +304,11 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 			 */
 
 			this.jodit.events
-				.on(this.container, 'mousedown touchend keydown', this.onMouseDown)
+				.on(
+					this.container,
+					'mousedown touchend keydown',
+					this.onMouseDown
+				)
 				.on(`click-${clearName}-btn`, this.onMouseDown);
 		}
 	}
@@ -293,8 +319,8 @@ export class ToolbarButton extends ToolbarElement implements IToolbarButton {
 		}
 
 		this.jodit &&
-		this.jodit.events &&
-		this.jodit.events.off(this.container);
+			this.jodit.events &&
+			this.jodit.events.off(this.container);
 
 		super.destruct();
 

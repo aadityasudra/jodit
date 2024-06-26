@@ -22,11 +22,11 @@ Config.prototype.controls.paragraph = {
 			const currentBox: HTMLElement =
 					(Dom.closest(
 						current,
-						node => Dom.isBlock(node, editor.editorWindow),
+						(node) => Dom.isBlock(node, editor.editorWindow),
 						editor.editor
 					) as HTMLElement) || editor.editor,
 				currentValue: string = currentBox.nodeName.toLowerCase(),
-				list = (btn.list as any);
+				list = btn.list as any;
 
 			if (
 				button &&
@@ -35,9 +35,9 @@ Config.prototype.controls.paragraph = {
 				btn.list &&
 				list[currentValue]
 			) {
-				button.textBox.innerHTML = `<span>${
-					editor.i18n(list[currentValue])
-				}</span>`;
+				button.textBox.innerHTML = `<span>${editor.i18n(
+					list[currentValue]
+				)}</span>`;
 
 				(button.textBox.firstChild as HTMLElement).classList.add(
 					'jodit_icon'
@@ -73,7 +73,7 @@ Config.prototype.controls.paragraph = {
 		if (current) {
 			const currentBox: HTMLElement = Dom.closest(
 				current,
-				node => Dom.isBlock(node, editor.editorWindow),
+				(node) => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
 			) as HTMLElement;
 
@@ -93,7 +93,7 @@ Config.prototype.controls.paragraph = {
 		if (current) {
 			const currentBpx: HTMLElement = Dom.closest(
 				current,
-				node => Dom.isBlock(node, editor.editorWindow),
+				(node) => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
 			) as HTMLElement;
 
@@ -141,9 +141,9 @@ export function formatBlock(editor: IJodit) {
 				let currentBox: HTMLElement | false = current
 					? (Dom.up(
 							current,
-							node => Dom.isBlock(node, editor.editorWindow),
+							(node) => Dom.isBlock(node, editor.editorWindow),
 							editor.editor
-					  ) as HTMLElement)
+						) as HTMLElement)
 					: false;
 
 				if ((!currentBox || currentBox.nodeName === 'LI') && current) {
@@ -188,9 +188,8 @@ export function formatBlock(editor: IJodit) {
 			});
 
 			if (!work) {
-				const currentBox: HTMLElement = editor.editorDocument.createElement(
-					third
-				);
+				const currentBox: HTMLElement =
+					editor.editorDocument.createElement(third);
 				currentBox.innerHTML = consts.INVISIBLE_SPACE;
 				editor.selection.insertNode(currentBox, false);
 				editor.selection.setCursorIn(currentBox);

@@ -82,17 +82,17 @@ export function placeholder(this: any, editor: IJodit) {
 			let marginTop: number = 0,
 				marginLeft: number = 0;
 
-			const style: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(
-				editor.editor
-			);
+			const style: CSSStyleDeclaration =
+				editor.editorWindow.getComputedStyle(editor.editor);
 
 			if (
 				editor.editor.firstChild &&
 				editor.editor.firstChild.nodeType === Node.ELEMENT_NODE
 			) {
-				const style2: CSSStyleDeclaration = editor.editorWindow.getComputedStyle(
-					editor.editor.firstChild as Element
-				);
+				const style2: CSSStyleDeclaration =
+					editor.editorWindow.getComputedStyle(
+						editor.editor.firstChild as Element
+					);
 				marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
 				marginLeft = parseInt(
 					style2.getPropertyValue('margin-left'),
@@ -100,15 +100,13 @@ export function placeholder(this: any, editor: IJodit) {
 				);
 				placeholderElm.style.fontSize =
 					parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
-				placeholderElm.style.lineHeight = style2.getPropertyValue(
-					'line-height'
-				);
+				placeholderElm.style.lineHeight =
+					style2.getPropertyValue('line-height');
 			} else {
 				placeholderElm.style.fontSize =
 					parseInt(style.getPropertyValue('font-size'), 10) + 'px';
-				placeholderElm.style.lineHeight = style.getPropertyValue(
-					'line-height'
-				);
+				placeholderElm.style.lineHeight =
+					style.getPropertyValue('line-height');
 			}
 
 			css(placeholderElm, {

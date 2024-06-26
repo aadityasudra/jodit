@@ -47,14 +47,14 @@ export class Snapshot extends Component<IJodit> {
 		for (j = 0; j < elms.length; j += 1) {
 			if (
 				last &&
-				(!(
+				!(
 					elms[j].nodeType === Node.TEXT_NODE &&
 					elms[j].textContent === ''
 				) &&
-					!(
-						last.nodeType === Node.TEXT_NODE &&
-						elms[j].nodeType === Node.TEXT_NODE
-					))
+				!(
+					last.nodeType === Node.TEXT_NODE &&
+					elms[j].nodeType === Node.TEXT_NODE
+				)
 			) {
 				count += 1;
 			}
@@ -156,13 +156,11 @@ export class Snapshot extends Component<IJodit> {
 		const sel = this.jodit.selection.sel;
 
 		if (sel && sel.rangeCount) {
-			const
-				range = sel.getRangeAt(0),
+			const range = sel.getRangeAt(0),
 				startContainer = this.calcHierarchyLadder(range.startContainer),
 				endContainer = this.calcHierarchyLadder(range.endContainer);
 
-			let
-				startOffset = Snapshot.strokeOffset(
+			let startOffset = Snapshot.strokeOffset(
 					range.startContainer,
 					range.startOffset
 				),

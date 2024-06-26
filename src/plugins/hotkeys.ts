@@ -48,7 +48,7 @@ export class hotkeys extends Plugin {
 
 		const modif: string[] = [special || character];
 
-		['alt', 'ctrl', 'shift', 'meta'].forEach(specialKey => {
+		['alt', 'ctrl', 'shift', 'meta'].forEach((specialKey) => {
 			if ((event as any)[specialKey + 'Key'] && special !== specialKey) {
 				modif.push(specialKey);
 			}

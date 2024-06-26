@@ -9,13 +9,13 @@
 
 let keys = [];
 
-module.exports = function(content, fileData) {
+module.exports = function (content, fileData) {
 	this.cacheable && this.cacheable();
 
 	let result = [];
 
 	try {
-		let lang = eval(content);
+		const lang = eval(content);
 
 		if (!keys.length) {
 			keys = Object.keys(lang);

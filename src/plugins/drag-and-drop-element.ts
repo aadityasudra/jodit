@@ -153,7 +153,7 @@ export class DragAndDropElement extends Plugin {
 	public afterInit() {
 		this.dragList = this.jodit.options.draggableTags
 			? splitArray(this.jodit.options.draggableTags)
-					.filter(item => item)
+					.filter((item) => item)
 					.map((item: string) => item.toLowerCase())
 			: [];
 

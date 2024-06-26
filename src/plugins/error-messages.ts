@@ -47,9 +47,9 @@ export function errorMessages(editor: IJodit) {
 			),
 			recalcOffsets = () => {
 				height = 5;
-				Array.from(<NodeListOf<HTMLElement>>(
-					messagesBox.childNodes
-				)).forEach((elm: HTMLElement) => {
+				Array.from(
+					<NodeListOf<HTMLElement>>messagesBox.childNodes
+				).forEach((elm: HTMLElement) => {
 					css(messagesBox, 'bottom', height + 'px');
 
 					height +=

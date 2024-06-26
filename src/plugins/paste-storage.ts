@@ -76,9 +76,9 @@ export class pasteStorage extends Plugin {
 
 	private selectIndex = (index: number) => {
 		if (this.listBox) {
-			Array.from(<NodeListOf<HTMLAnchorElement>>(
-				this.listBox.childNodes
-			)).forEach((a, i) => {
+			Array.from(
+				<NodeListOf<HTMLAnchorElement>>this.listBox.childNodes
+			).forEach((a, i) => {
 				a.classList.remove('jodit_active');
 				if (index === i && this.previewBox) {
 					a.classList.add('jodit_active');
@@ -163,7 +163,8 @@ export class pasteStorage extends Plugin {
 			this.listBox,
 			'click dblclick',
 			(e: MouseEvent) => {
-				const a: HTMLAnchorElement | null = e.target as HTMLAnchorElement;
+				const a: HTMLAnchorElement | null =
+					e.target as HTMLAnchorElement;
 				if (a && a.nodeName === 'A' && a.hasAttribute('data-index')) {
 					this.selectIndex(
 						parseInt(a.getAttribute('data-index') || '0', 10)

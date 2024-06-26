@@ -285,4 +285,5 @@ export interface IFileBrowserItemWrapper {
 	uniqueHashKey: string;
 }
 
-export type IFileBrowserItem = IFileBrowserItemWrapper & IFileBrowserItemElement;
+export type IFileBrowserItem = IFileBrowserItemWrapper &
+	IFileBrowserItemElement;

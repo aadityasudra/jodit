@@ -20,37 +20,37 @@
  * ```
  */
 export const colorToHex = (color: string): string | false => {
-    if (color === 'rgba(0, 0, 0, 0)' || color === '') {
-        return false;
-    }
+	if (color === 'rgba(0, 0, 0, 0)' || color === '') {
+		return false;
+	}
 
-    if (!color) {
-        return '#000000';
-    }
+	if (!color) {
+		return '#000000';
+	}
 
-    if (color.substr(0, 1) === '#') {
-        return color;
-    }
+	if (color.substr(0, 1) === '#') {
+		return color;
+	}
 
-    const digits =
-        /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
-        /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
-    let hex, red, green, blue, rgb;
+	const digits =
+		/([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
+		/([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
+	let hex, red, green, blue, rgb;
 
-    if (!digits) {
-        return '#000000';
-    }
+	if (!digits) {
+		return '#000000';
+	}
 
-    red = parseInt(digits[2], 10);
-    green = parseInt(digits[3], 10);
-    blue = parseInt(digits[4], 10);
-    rgb = blue | (green << 8) | (red << 16);
+	red = parseInt(digits[2], 10);
+	green = parseInt(digits[3], 10);
+	blue = parseInt(digits[4], 10);
+	rgb = blue | (green << 8) | (red << 16);
 
-    hex = rgb.toString(16).toUpperCase();
+	hex = rgb.toString(16).toUpperCase();
 
-    while (hex.length < 6) {
-        hex = '0' + hex;
-    }
+	while (hex.length < 6) {
+		hex = '0' + hex;
+	}
 
-    return digits[1] + '#' + hex;
+	return digits[1] + '#' + hex;
 };

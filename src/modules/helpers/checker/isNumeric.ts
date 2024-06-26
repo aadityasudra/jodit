@@ -13,13 +13,13 @@
  * @param value
  */
 export const isNumeric = (value: number | string): boolean => {
-    if (typeof value === 'string') {
-        if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
-            return false;
-        }
+	if (typeof value === 'string') {
+		if (!value.match(/^([+\-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+			return false;
+		}
 
-        value = parseFloat(value);
-    }
+		value = parseFloat(value);
+	}
 
-    return !isNaN(value) && isFinite(value);
+	return !isNaN(value) && isFinite(value);
 };

@@ -112,8 +112,7 @@ export function cleanHtml(editor: IJodit) {
 		});
 	}
 
-	const
-		attributesReg = /([^\[]*)\[([^\]]+)]/,
+	const attributesReg = /([^\[]*)\[([^\]]+)]/,
 		seperator = /[\s]*,[\s]*/,
 		attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
 
@@ -165,8 +164,7 @@ export function cleanHtml(editor: IJodit) {
 
 	let current: Node | false;
 
-	const
-		allowTagsHash: IDictionary | false = getHash(
+	const allowTagsHash: IDictionary | false = getHash(
 			editor.options.cleanHTML.allowTags
 		),
 		denyTagsHash: IDictionary | false = getHash(
@@ -206,12 +204,12 @@ export function cleanHtml(editor: IJodit) {
 			!hasNotEmptyTextSibling(node, true) &&
 			Dom.up(
 				node,
-				node => Dom.isBlock(node, editor.editorWindow),
+				(node) => Dom.isBlock(node, editor.editorWindow),
 				editor.editor
 			) !==
 				Dom.up(
 					current,
-					node => Dom.isBlock(node, editor.editorWindow),
+					(node) => Dom.isBlock(node, editor.editorWindow),
 					editor.editor
 				)
 		) {
@@ -249,9 +247,8 @@ export function cleanHtml(editor: IJodit) {
 							editor.options.cleanHTML.replaceOldTags;
 
 					if (replaceOldTags && current) {
-						const tags: string = Object.keys(replaceOldTags).join(
-							'|'
-						);
+						const tags: string =
+							Object.keys(replaceOldTags).join('|');
 						if (editor.selection.isCollapsed()) {
 							const oldParent: Node | false = Dom.closest(
 								current,
@@ -294,9 +291,8 @@ export function cleanHtml(editor: IJodit) {
 									/^(img|svg|canvas|input|textarea|form|br)$/
 								)
 							) {
-								const br: HTMLBRElement = editor.create.inside.element(
-									'br'
-								);
+								const br: HTMLBRElement =
+									editor.create.inside.element('br');
 								nodeElm.appendChild(br);
 							}
 
@@ -304,8 +300,9 @@ export function cleanHtml(editor: IJodit) {
 								allowTagsHash &&
 								allowTagsHash[nodeElm.nodeName] !== true
 							) {
-								const attributes: NamedNodeMap = (nodeElm as Element)
-									.attributes;
+								const attributes: NamedNodeMap = (
+									nodeElm as Element
+								).attributes;
 
 								if (attributes && attributes.length) {
 									const removeAttrs: string[] = [];
@@ -369,11 +366,11 @@ export function cleanHtml(editor: IJodit) {
 			if (currentNode) {
 				const currentParagraph: Node | false = Dom.up(
 					currentNode,
-					node => Dom.isBlock(node, editor.editorWindow),
+					(node) => Dom.isBlock(node, editor.editorWindow),
 					editor.editor
 				);
 				if (currentParagraph) {
-					Dom.all(currentParagraph, node => {
+					Dom.all(currentParagraph, (node) => {
 						if (node && node.nodeType === Node.TEXT_NODE) {
 							if (
 								node.nodeValue !== null &&
@@ -412,7 +409,7 @@ export function cleanHtml(editor: IJodit) {
 					if (hr) {
 						node = Dom.next(
 							hr,
-							node => Dom.isBlock(node, editor.editorWindow),
+							(node) => Dom.isBlock(node, editor.editorWindow),
 							editor.editor,
 							false
 						) as Node | null;
@@ -452,9 +449,9 @@ export function cleanHtml(editor: IJodit) {
 													attr.name.toLowerCase()
 												) === -1
 											) {
-												(elm as Element).removeAttribute(
-													attr.name
-												);
+												(
+													elm as Element
+												).removeAttribute(attr.name);
 											}
 										});
 									normalizeNode(elm);

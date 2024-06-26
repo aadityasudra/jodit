@@ -243,242 +243,229 @@ export function backspace(editor: IJodit) {
 				}
 			}
 		})
-		.on(
-			'keydown',
-			(event: KeyboardEvent): false | void => {
-				if (
-					event.which === consts.KEY_BACKSPACE ||
-					event.which === consts.KEY_DELETE
-				) {
-					const toLeft: boolean =
-						event.which === consts.KEY_BACKSPACE;
+		.on('keydown', (event: KeyboardEvent): false | void => {
+			if (
+				event.which === consts.KEY_BACKSPACE ||
+				event.which === consts.KEY_DELETE
+			) {
+				const toLeft: boolean = event.which === consts.KEY_BACKSPACE;
 
-					if (!editor.selection.isFocused()) {
-						editor.selection.focus();
-					}
+				if (!editor.selection.isFocused()) {
+					editor.selection.focus();
+				}
 
-					if (!editor.selection.isCollapsed()) {
-						editor.execCommand('Delete');
+				if (!editor.selection.isCollapsed()) {
+					editor.execCommand('Delete');
+					return false;
+				}
+
+				const sel = editor.selection.sel,
+					range = sel && sel.rangeCount ? sel.getRangeAt(0) : false;
+
+				if (!range) {
+					return false;
+				}
+
+				const fakeNode: Node = editor.ownerDocument.createTextNode(
+					consts.INVISIBLE_SPACE
+				);
+
+				const marker: HTMLElement =
+					editor.editorDocument.createElement('span');
+
+				try {
+					range.insertNode(fakeNode);
+
+					if (!Dom.isOrContains(editor.editor, fakeNode)) {
 						return false;
 					}
 
-					const
-						sel = editor.selection.sel,
-						range = sel && sel.rangeCount ? sel.getRangeAt(0) : false;
+					let container: HTMLElement | null = Dom.up(
+						fakeNode,
+						(node) => Dom.isBlock(node, editor.editorWindow),
+						editor.editor
+					) as HTMLElement | null;
 
-					if (!range) {
+					const workElement: Node | null = Dom.findInline(
+						fakeNode,
+						toLeft,
+						editor.editor
+					);
+
+					const box = {
+						node: workElement
+					};
+
+					let tryRemoveInline: boolean | void;
+
+					if (workElement) {
+						tryRemoveInline = removeInline(box, toLeft, range);
+					} else if (fakeNode.parentNode) {
+						tryRemoveInline = removeInline(
+							{
+								node: toLeft
+									? fakeNode.parentNode.previousSibling
+									: fakeNode.parentNode.nextSibling
+							},
+							toLeft,
+							range
+						);
+					}
+
+					if (tryRemoveInline !== undefined) {
+						return tryRemoveInline ? undefined : false;
+					}
+
+					if (container && container.nodeName.match(/^(TD)$/)) {
 						return false;
 					}
 
-					const fakeNode: Node = editor.ownerDocument.createTextNode(
-						consts.INVISIBLE_SPACE
-					);
+					let prevBox: Node | false | null = toLeft
+						? Dom.prev(
+								box.node || fakeNode,
+								(node) =>
+									Dom.isBlock(node, editor.editorWindow),
+								editor.editor
+							)
+						: Dom.next(
+								box.node || fakeNode,
+								(node) =>
+									Dom.isBlock(node, editor.editorWindow),
+								editor.editor
+							);
 
-					const marker: HTMLElement = editor.editorDocument.createElement(
-						'span'
-					);
+					if (!prevBox && container && container.parentNode) {
+						prevBox = editor.create.inside.element(
+							editor.options.enter
+						);
+						let boxNode: Node = container;
 
-					try {
-						range.insertNode(fakeNode);
-
-						if (!Dom.isOrContains(editor.editor, fakeNode)) {
-							return false;
+						while (
+							boxNode &&
+							boxNode.parentNode &&
+							boxNode.parentNode !== editor.editor
+						) {
+							boxNode = boxNode.parentNode;
 						}
 
-						let container: HTMLElement | null = Dom.up(
-							fakeNode,
-							node => Dom.isBlock(node, editor.editorWindow),
-							editor.editor
-						) as HTMLElement | null;
+						boxNode.parentNode &&
+							boxNode.parentNode.insertBefore(prevBox, boxNode);
+					} else {
+						if (prevBox && isEmpty(prevBox)) {
+							Dom.safeRemove(prevBox);
+							return false;
+						}
+					}
 
-						const workElement: Node | null = Dom.findInline(
-							fakeNode,
-							toLeft,
-							editor.editor
+					if (prevBox) {
+						const tmpNode: Node = editor.selection.setCursorIn(
+							prevBox,
+							!toLeft
 						);
 
-						const box = {
-							node: workElement
-						};
+						editor.selection.insertNode(marker, false, false);
 
-						let tryRemoveInline: boolean | void;
-
-						if (workElement) {
-							tryRemoveInline = removeInline(box, toLeft, range);
-						} else if (fakeNode.parentNode) {
-							tryRemoveInline = removeInline(
-								{
-									node: toLeft
-										? fakeNode.parentNode.previousSibling
-										: fakeNode.parentNode.nextSibling
-								},
-								toLeft,
-								range
-							);
+						if (
+							tmpNode.nodeType === Node.TEXT_NODE &&
+							tmpNode.nodeValue === consts.INVISIBLE_SPACE
+						) {
+							Dom.safeRemove(tmpNode);
 						}
+					}
 
-						if (tryRemoveInline !== undefined) {
-							return tryRemoveInline ? undefined : false;
-						}
+					if (container) {
+						removeEmptyBlocks(container);
 
-						if (container && container.nodeName.match(/^(TD)$/)) {
-							return false;
-						}
-
-						let prevBox: Node | false | null = toLeft
-							? Dom.prev(
-									box.node || fakeNode,
-									node =>
-										Dom.isBlock(node, editor.editorWindow),
-									editor.editor
-							  )
-							: Dom.next(
-									box.node || fakeNode,
-									node =>
-										Dom.isBlock(node, editor.editorWindow),
-									editor.editor
-							  );
-
-						if (!prevBox && container && container.parentNode) {
-							prevBox = editor.create.inside.element(
-								editor.options.enter
-							);
-							let boxNode: Node = container;
-
-							while (
-								boxNode &&
-								boxNode.parentNode &&
-								boxNode.parentNode !== editor.editor
+						if (prevBox && container.parentNode) {
+							if (
+								container.nodeName === prevBox.nodeName &&
+								container.parentNode &&
+								prevBox.parentNode &&
+								container.parentNode !== editor.editor &&
+								prevBox.parentNode !== editor.editor &&
+								container.parentNode !== prevBox.parentNode &&
+								container.parentNode.nodeName ===
+									prevBox.parentNode.nodeName
 							) {
-								boxNode = boxNode.parentNode;
+								container = container.parentNode as HTMLElement;
+								prevBox = prevBox.parentNode as HTMLElement;
 							}
-
-							boxNode.parentNode &&
-								boxNode.parentNode.insertBefore(
-									prevBox,
-									boxNode
-								);
-						} else {
-							if (prevBox && isEmpty(prevBox)) {
-								Dom.safeRemove(prevBox);
-								return false;
-							}
+							Dom.moveContent(container, prevBox, !toLeft);
+							normalizeNode(prevBox);
 						}
 
-						if (prevBox) {
-							const tmpNode: Node = editor.selection.setCursorIn(
+						if (prevBox && prevBox.nodeName === 'LI') {
+							const UL: Node | false = Dom.closest(
 								prevBox,
-								!toLeft
+								'Ul|OL',
+								editor.editor
 							);
-
-							editor.selection.insertNode(marker, false, false);
-
-							if (
-								tmpNode.nodeType === Node.TEXT_NODE &&
-								tmpNode.nodeValue === consts.INVISIBLE_SPACE
-							) {
-								Dom.safeRemove(tmpNode);
-							}
-						}
-
-						if (container) {
-							removeEmptyBlocks(container);
-
-							if (prevBox && container.parentNode) {
+							if (UL) {
+								const nextBox: Node | null = UL.nextSibling;
 								if (
-									container.nodeName === prevBox.nodeName &&
-									container.parentNode &&
-									prevBox.parentNode &&
-									container.parentNode !== editor.editor &&
-									prevBox.parentNode !== editor.editor &&
-									container.parentNode !==
-										prevBox.parentNode &&
-									container.parentNode.nodeName ===
-										prevBox.parentNode.nodeName
+									nextBox &&
+									nextBox.nodeName === UL.nodeName &&
+									UL !== nextBox
 								) {
-									container = container.parentNode as HTMLElement;
-									prevBox = prevBox.parentNode as HTMLElement;
+									Dom.moveContent(nextBox, UL, !toLeft);
+									Dom.safeRemove(nextBox);
 								}
-								Dom.moveContent(container, prevBox, !toLeft);
-								normalizeNode(prevBox);
-							}
-
-							if (prevBox && prevBox.nodeName === 'LI') {
-								const UL: Node | false = Dom.closest(
-									prevBox,
-									'Ul|OL',
-									editor.editor
-								);
-								if (UL) {
-									const nextBox: Node | null = UL.nextSibling;
-									if (
-										nextBox &&
-										nextBox.nodeName === UL.nodeName &&
-										UL !== nextBox
-									) {
-										Dom.moveContent(nextBox, UL, !toLeft);
-										Dom.safeRemove(nextBox);
-									}
-								}
-							}
-
-							removeEmptyBlocks(container);
-
-							return false;
-						}
-					} finally {
-						if (
-							fakeNode.parentNode &&
-							fakeNode.nodeValue === consts.INVISIBLE_SPACE
-						) {
-							const parent: Node = fakeNode.parentNode;
-
-							Dom.safeRemove(fakeNode);
-
-							if (
-								!parent.firstChild &&
-								parent.parentNode &&
-								parent !== editor.editor
-							) {
-								Dom.safeRemove(parent);
 							}
 						}
 
+						removeEmptyBlocks(container);
+
+						return false;
+					}
+				} finally {
+					if (
+						fakeNode.parentNode &&
+						fakeNode.nodeValue === consts.INVISIBLE_SPACE
+					) {
+						const parent: Node = fakeNode.parentNode;
+
+						Dom.safeRemove(fakeNode);
+
 						if (
-							marker &&
-							Dom.isOrContains(editor.editor, marker, true)
+							!parent.firstChild &&
+							parent.parentNode &&
+							parent !== editor.editor
 						) {
-							const tmpNode:
-								| Text
-								| false = editor.selection.setCursorBefore(
-								marker
-							);
+							Dom.safeRemove(parent);
+						}
+					}
 
-							Dom.safeRemove(marker);
+					if (
+						marker &&
+						Dom.isOrContains(editor.editor, marker, true)
+					) {
+						const tmpNode: Text | false =
+							editor.selection.setCursorBefore(marker);
 
-							if (
-								tmpNode &&
-								tmpNode.parentNode &&
-								(Dom.findInline(
+						Dom.safeRemove(marker);
+
+						if (
+							tmpNode &&
+							tmpNode.parentNode &&
+							(Dom.findInline(
+								tmpNode,
+								true,
+								tmpNode.parentNode
+							) ||
+								Dom.findInline(
 									tmpNode,
 									true,
 									tmpNode.parentNode
-								) ||
-									Dom.findInline(
-										tmpNode,
-										true,
-										tmpNode.parentNode
-									))
-							) {
-								Dom.safeRemove(tmpNode);
-							}
+								))
+						) {
+							Dom.safeRemove(tmpNode);
 						}
-
-						editor.setEditorValue();
 					}
 
-					return false;
+					editor.setEditorValue();
 				}
+
+				return false;
 			}
-		);
+		});
 }

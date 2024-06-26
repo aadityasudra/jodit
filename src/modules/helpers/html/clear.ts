@@ -1,4 +1,4 @@
-    /*!
+/*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Licensed under GNU General Public License version 2 or later or a commercial license or MIT;
  * For GPL see LICENSE-GPL.txt in the project root for license information.
@@ -19,16 +19,16 @@ import { INVISIBLE_SPACE_REG_EXP } from '../../../constants';
  * @return {string}
  */
 export const clear = (value: string, removeEmptyBlocks = false): string => {
-    value = trim(value)
-        .replace(INVISIBLE_SPACE_REG_EXP, '')
-        .replace(/[\s]*class=""/g, '');
+	value = trim(value)
+		.replace(INVISIBLE_SPACE_REG_EXP, '')
+		.replace(/[\s]*class=""/g, '');
 
-    if (removeEmptyBlocks) {
-        value = value.replace(
-            /<p[^>]*>[\s\n\r\t]*(&nbsp;|<br>|<br\/>)?[\s\n\r\t]*<\/p>[\n\r]*/g,
-            ''
-        );
-    }
+	if (removeEmptyBlocks) {
+		value = value.replace(
+			/<p[^>]*>[\s\n\r\t]*(&nbsp;|<br>|<br\/>)?[\s\n\r\t]*<\/p>[\n\r]*/g,
+			''
+		);
+	}
 
-    return value;
+	return value;
 };

@@ -75,7 +75,7 @@ Config.prototype.uploader = {
 
 	getMessage(this: Uploader, resp: IUploaderAnswer) {
 		return resp.data.messages !== undefined &&
-		Array.isArray(resp.data.messages)
+			Array.isArray(resp.data.messages)
 			? resp.data.messages.join(' ')
 			: '';
 	},
@@ -96,9 +96,9 @@ Config.prototype.uploader = {
 						? ['img', 'src']
 						: ['a', 'href'];
 
-				const elm: HTMLElement = this.jodit.create.inside.element(<
-					'img' | 'a'
-					>tagName);
+				const elm: HTMLElement = this.jodit.create.inside.element(
+					<'img' | 'a'>tagName
+				);
 
 				elm.setAttribute(attr, resp.baseurl + filename);
 
@@ -127,7 +127,7 @@ Config.prototype.uploader = {
 
 	contentType(this: Uploader, requestData: any) {
 		return (this.jodit.ownerWindow as any).FormData !== undefined &&
-		typeof requestData !== 'string'
+			typeof requestData !== 'string'
 			? false
 			: 'application/x-www-form-urlencoded; charset=UTF-8';
 	}
@@ -191,7 +191,7 @@ export class Uploader extends Component implements IUploader {
 
 			const newdata: FormData = new FD();
 
-			Object.keys(data).forEach(key => {
+			Object.keys(data).forEach((key) => {
 				newdata.append(key, data[key]);
 			});
 
@@ -217,12 +217,12 @@ export class Uploader extends Component implements IUploader {
 
 						if (
 							(this.jodit.ownerWindow as any).FormData !==
-							undefined &&
+								undefined &&
 							xhr.upload
 						) {
 							xhr.upload.addEventListener(
 								'progress',
-								evt => {
+								(evt) => {
 									if (evt.lengthComputable) {
 										let percentComplete =
 											evt.loaded / evt.total;
@@ -269,18 +269,18 @@ export class Uploader extends Component implements IUploader {
 
 				return ajax
 					.send()
-					.then(resp => {
+					.then((resp) => {
 						removeAjaxInstanceFromList();
 						success.call(this, resp);
 					})
-					.catch(error => {
+					.catch((error) => {
 						removeAjaxInstanceFromList();
 						this.options.error.call(this, error);
 					});
 			};
 
 		if (requestData instanceof Promise) {
-			return requestData.then(sendData).catch(error => {
+			return requestData.then(sendData).catch((error) => {
 				this.options.error.call(this, error);
 			});
 		} else {
@@ -329,8 +329,7 @@ export class Uploader extends Component implements IUploader {
 						? mime[1].toLowerCase()
 						: '';
 					if (this.options.imagesExtensions.includes(extension)) {
-						const
-							reader: FileReader = new FileReader();
+						const reader: FileReader = new FileReader();
 
 						promises.push(
 							new Promise<any>((resolve, reject) => {
@@ -349,12 +348,11 @@ export class Uploader extends Component implements IUploader {
 												.defaultHandlerSuccess
 										) === 'function'
 									) {
-										((handlerSuccess ||
-											uploader.options
-												.defaultHandlerSuccess) as HandlerSuccess).call(
-											uploader,
-											resp
-										);
+										(
+											(handlerSuccess ||
+												uploader.options
+													.defaultHandlerSuccess) as HandlerSuccess
+										).call(uploader, resp);
 									}
 
 									resolve(resp);
@@ -368,7 +366,7 @@ export class Uploader extends Component implements IUploader {
 			}
 		}
 
-		fileList = fileList.filter(a => a);
+		fileList = fileList.filter((a) => a);
 
 		if (fileList.length) {
 			const form: FormData = new FormData();
@@ -389,9 +387,7 @@ export class Uploader extends Component implements IUploader {
 
 					let newName =
 						fileList[i].name ||
-						Math.random()
-							.toString()
-							.replace('.', '');
+						Math.random().toString().replace('.', '');
 
 					if (extension) {
 						let extForReg = extension;
@@ -407,7 +403,11 @@ export class Uploader extends Component implements IUploader {
 						}
 					}
 
-					form.append(this.options.filesVariableName(i), fileList[i], newName);
+					form.append(
+						this.options.filesVariableName(i),
+						fileList[i],
+						newName
+					);
 				}
 			}
 
@@ -433,9 +433,11 @@ export class Uploader extends Component implements IUploader {
 									uploader.options.defaultHandlerSuccess
 								) === 'function'
 							) {
-								((handlerSuccess ||
-									uploader.options
-										.defaultHandlerSuccess) as HandlerSuccess).call(
+								(
+									(handlerSuccess ||
+										uploader.options
+											.defaultHandlerSuccess) as HandlerSuccess
+								).call(
 									uploader,
 									uploader.options.process.call(
 										uploader,
@@ -450,9 +452,11 @@ export class Uploader extends Component implements IUploader {
 									uploader.options.defaultHandlerError
 								)
 							) {
-								((handlerError ||
-									uploader.options
-										.defaultHandlerError) as HandlerError).call(
+								(
+									(handlerError ||
+										uploader.options
+											.defaultHandlerError) as HandlerError
+								).call(
 									uploader,
 									new Error(
 										uploader.options.getMessage.call(
@@ -467,7 +471,7 @@ export class Uploader extends Component implements IUploader {
 					})
 					.then(() => {
 						this.jodit.events &&
-						this.jodit.events.fire('filesWereUploaded');
+							this.jodit.events.fire('filesWereUploaded');
 					})
 			);
 		}
@@ -551,20 +555,23 @@ export class Uploader extends Component implements IUploader {
 				if (browser('ff') || IS_IE) {
 					if (
 						e.clipboardData &&
-						(!e.clipboardData.types.length &&
-							e.clipboardData.types[0] !== TEXT_PLAIN)
+						!e.clipboardData.types.length &&
+						e.clipboardData.types[0] !== TEXT_PLAIN
 					) {
 						const div = this.jodit.create.div('', {
-							'tabindex': -1,
-							'style': 'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
+							tabindex: -1,
+							style:
+								'left: -9999px; top: 0; width: 0; height: 100%;line-height: 140%; ' +
 								'overflow: hidden; position: fixed; z-index: 2147483647; word-break: break-all;',
-							'contenteditable': true
+							contenteditable: true
 						});
 
 						this.jodit.ownerDocument.body.appendChild(div);
 
-						const
-							selection = this.jodit && isJoditObject(this.jodit) ? this.jodit.selection.save() : null,
+						const selection =
+								this.jodit && isJoditObject(this.jodit)
+									? this.jodit.selection.save()
+									: null,
 							restore = () =>
 								selection &&
 								this.jodit &&
@@ -574,7 +581,8 @@ export class Uploader extends Component implements IUploader {
 						div.focus();
 
 						setTimeout(() => {
-							const child: HTMLDivElement | null = div.firstChild as HTMLDivElement;
+							const child: HTMLDivElement | null =
+								div.firstChild as HTMLDivElement;
 
 							Dom.safeRemove(div);
 
@@ -638,8 +646,8 @@ export class Uploader extends Component implements IUploader {
 		const hasFiles = (event: DragEvent): boolean =>
 			Boolean(
 				event.dataTransfer &&
-				event.dataTransfer.files &&
-				event.dataTransfer.files.length !== 0
+					event.dataTransfer.files &&
+					event.dataTransfer.files.length !== 0
 			);
 
 		self.jodit.events
@@ -653,58 +661,57 @@ export class Uploader extends Component implements IUploader {
 			.on(form, 'dragover', (event: DragEvent) => {
 				if (hasFiles(event)) {
 					form.classList.contains('jodit_draghover') ||
-					form.classList.add('jodit_draghover');
+						form.classList.add('jodit_draghover');
 					event.preventDefault();
 				}
 			})
 			.on(form, 'dragend', (event: DragEvent) => {
 				if (hasFiles(event)) {
 					form.classList.contains('jodit_draghover') &&
-					form.classList.remove('jodit_draghover');
+						form.classList.remove('jodit_draghover');
 					event.preventDefault();
 				}
 			})
-			.on(
-				form,
-				'drop',
-				(event: DragEvent): false | void => {
-					form.classList.remove('jodit_draghover');
+			.on(form, 'drop', (event: DragEvent): false | void => {
+				form.classList.remove('jodit_draghover');
 
-					if (
-						hasFiles(event) &&
-						event.dataTransfer &&
-						event.dataTransfer.files
-					) {
-						event.preventDefault();
-						event.stopImmediatePropagation();
-						this.sendFiles(
-							event.dataTransfer.files,
-							handlerSuccess,
-							handlerError
-						);
-					}
+				if (
+					hasFiles(event) &&
+					event.dataTransfer &&
+					event.dataTransfer.files
+				) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+					this.sendFiles(
+						event.dataTransfer.files,
+						handlerSuccess,
+						handlerError
+					);
 				}
-			);
+			});
 
-		const inputFile: HTMLInputElement | null = form.querySelector(
-			'input[type=file]'
-		);
+		const inputFile: HTMLInputElement | null =
+			form.querySelector('input[type=file]');
 
 		if (inputFile) {
-			self.jodit.events.on(inputFile, 'change', function(
-				this: HTMLInputElement
-			) {
-				self.sendFiles(this.files, handlerSuccess, handlerError).then(
-					() => {
+			self.jodit.events.on(
+				inputFile,
+				'change',
+				function (this: HTMLInputElement) {
+					self.sendFiles(
+						this.files,
+						handlerSuccess,
+						handlerError
+					).then(() => {
 						inputFile.value = '';
 
 						if (!/safari/i.test(navigator.userAgent)) {
 							inputFile.type = '';
 							inputFile.type = 'file';
 						}
-					}
-				);
-			});
+					});
+				}
+			);
 		}
 	}
 
@@ -771,11 +778,10 @@ export class Uploader extends Component implements IUploader {
 	}
 
 	destruct(): any {
-		this.ajaxInstances.forEach(ajax => {
+		this.ajaxInstances.forEach((ajax) => {
 			try {
 				ajax.abort();
-			} catch {
-			}
+			} catch {}
 		});
 
 		delete this.options;

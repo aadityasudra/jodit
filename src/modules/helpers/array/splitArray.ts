@@ -13,4 +13,4 @@
  * @param a
  */
 export const splitArray = (a: any[] | string): any[] =>
-    typeof a === 'string' ? a.split(/[,\s]+/) : a;
+	typeof a === 'string' ? a.split(/[,\s]+/) : a;

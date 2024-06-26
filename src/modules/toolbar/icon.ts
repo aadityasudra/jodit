@@ -26,7 +26,6 @@ export class ToolbarIcon {
 		name: string,
 		defaultValue: string = '<span></span>'
 	): string {
-
 		const icon =
 			ToolbarIcon.icons[name] ||
 			ToolbarIcon.icons[name.replace(/-/g, '_')] ||

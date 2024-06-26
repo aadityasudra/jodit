@@ -40,18 +40,17 @@ export const Alert = (
 		title = undefined;
 	}
 
-	const
-		dialog: Dialog = new Dialog(),
+	const dialog: Dialog = new Dialog(),
 		container: HTMLDivElement = dialog.create.div(className),
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:right;" class="jodit_button">' +
-			ToolbarIcon.getIcon('cancel') +
-			'<span>' +
-			Jodit.prototype.i18n('Ok') +
-			'</span></a>'
+				ToolbarIcon.getIcon('cancel') +
+				'<span>' +
+				Jodit.prototype.i18n('Ok') +
+				'</span></a>'
 		) as HTMLAnchorElement;
 
-	asArray(msg).forEach(oneMessage => {
+	asArray(msg).forEach((oneMessage) => {
 		container.appendChild(
 			Dom.isNode(oneMessage, dialog.window)
 				? oneMessage

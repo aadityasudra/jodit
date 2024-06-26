@@ -82,12 +82,9 @@ export function limit(jodit: IJodit) {
 		let snapshot: SnapshotType | null = null;
 
 		jodit.events
-			.on(
-				'beforePaste',
-				() => {
-					snapshot = jodit.observer.snapshot.make();
-				}
-			)
+			.on('beforePaste', () => {
+				snapshot = jodit.observer.snapshot.make();
+			})
 			.on(
 				'keydown keyup beforeEnter beforePaste',
 				(event: KeyboardEvent): false | void => {
@@ -111,14 +108,11 @@ export function limit(jodit: IJodit) {
 					}
 				}, jodit.defaultTimeout)
 			)
-			.on(
-				'afterPaste',
-				(): false | void => {
-					if (callback(null) === false && snapshot) {
-						jodit.observer.snapshot.restore(snapshot);
-						return false;
-					}
+			.on('afterPaste', (): false | void => {
+				if (callback(null) === false && snapshot) {
+					jodit.observer.snapshot.restore(snapshot);
+					return false;
 				}
-			);
+			});
 	}
 }

@@ -27,7 +27,8 @@ import { Config } from '../../Config';
 
 export class ToolbarCollection<T extends IViewBased = IViewBased>
 	extends Component<T>
-	implements IToolbarCollection {
+	implements IToolbarCollection
+{
 	private __buttons: ToolbarElement[] = [];
 
 	private __getControlType = (
@@ -93,7 +94,7 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			.map((a: ToolbarElement) =>
 				a instanceof ToolbarButton ? a.control.name : ''
 			)
-			.filter(a => a !== '');
+			.filter((a) => a !== '');
 	}
 
 	appendChild(button: ToolbarElement) {
@@ -177,9 +178,11 @@ export class ToolbarCollection<T extends IViewBased = IViewBased>
 			return;
 		}
 
-		(this.__buttons.filter(
-			(button: ToolbarElement) => button instanceof ToolbarButton
-		) as ToolbarButton[]).forEach((button: ToolbarButton) => {
+		(
+			this.__buttons.filter(
+				(button: ToolbarElement) => button instanceof ToolbarButton
+			) as ToolbarButton[]
+		).forEach((button: ToolbarButton) => {
 			button.disable = button.isDisable();
 
 			if (!button.disable) {

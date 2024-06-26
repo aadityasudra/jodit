@@ -1,4 +1,7 @@
-import { IFileBrowserItemElement, IFileBrowserItemWrapper } from '../../../types';
+import {
+	IFileBrowserItemElement,
+	IFileBrowserItemWrapper
+} from '../../../types';
 import { extend } from '../../helpers/extend';
 import { normalizePath, normalizeURL } from '../../helpers/normalize';
 
@@ -7,23 +10,28 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 		extend(this, data);
 	}
 
-	static create(data: IFileBrowserItemElement): FileBrowserItem & IFileBrowserItemElement {
-		return <any>(new FileBrowserItem(data));
+	static create(
+		data: IFileBrowserItemElement
+	): FileBrowserItem & IFileBrowserItemElement {
+		return <any>new FileBrowserItem(data);
 	}
 
 	get path(): string {
-		return normalizePath(this.data.source.path ? this.data.source.path + '/' : '/');
+		return normalizePath(
+			this.data.source.path ? this.data.source.path + '/' : '/'
+		);
 	}
 
 	get imageURL(): string {
-		const
-			timestamp: string = new Date().getTime().toString(),
+		const timestamp: string = new Date().getTime().toString(),
 			{ thumbIsAbsolute, source, thumb, file } = this.data,
 			path = thumb || file;
 
-		return (thumbIsAbsolute && path) ?
-			path :
-			normalizeURL(source.baseurl, source.path, path || '') + '?_tmst=' + timestamp;
+		return thumbIsAbsolute && path
+			? path
+			: normalizeURL(source.baseurl, source.path, path || '') +
+					'?_tmst=' +
+					timestamp;
 	}
 
 	get fileURL(): string {
@@ -33,22 +41,33 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 			name = file;
 		}
 
-		return (fileIsAbsolute && name) ? name : normalizeURL(source.baseurl, source.path, name || '');
+		return fileIsAbsolute && name
+			? name
+			: normalizeURL(source.baseurl, source.path, name || '');
 	}
 
 	get time(): string {
 		const { changed } = this.data;
 
 		return (
-			changed &&
-			(typeof changed === 'number' ? new Date(changed).toLocaleString() : changed)
-		) || '';
+			(changed &&
+				(typeof changed === 'number'
+					? new Date(changed).toLocaleString()
+					: changed)) ||
+			''
+		);
 	}
 
 	get uniqueHashKey(): string {
 		const data = this.data;
 
-		let key = [data.sourceName, data.name, data.file, this.time, data.thumb].join('_');
+		let key = [
+			data.sourceName,
+			data.name,
+			data.file,
+			this.time,
+			data.thumb
+		].join('_');
 
 		key = key.toLowerCase().replace(/[^0-9a-z\-.]/g, '-');
 

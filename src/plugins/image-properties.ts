@@ -115,7 +115,7 @@ export function imageProperties(editor: IJodit) {
 	 * editor.plugins.image.open.call(img); // `this` must be HTMLImageElement
 	 * ```
 	 */
-	const open = function(this: HTMLImageElement, e?: MouseEvent) {
+	const open = function (this: HTMLImageElement, e?: MouseEvent) {
 		if (editor.options.readonly) {
 			return;
 		}
@@ -272,19 +272,19 @@ export function imageProperties(editor: IJodit) {
 					(editor.options.filebrowser.ajax.url ||
 					editor.options.uploader.url
 						? '<div class="jodit_input_group-buttons">' +
-						  (editor.options.filebrowser.ajax.url ||
-						  editor.options.uploader.url
+							(editor.options.filebrowser.ajax.url ||
+							editor.options.uploader.url
 								? '<a class="jodit_button jodit_rechange" href="javascript:void(0)">' +
-								  ToolbarIcon.getIcon('image') +
-								  '</a>'
+									ToolbarIcon.getIcon('image') +
+									'</a>'
 								: '') +
-						  (editor.options.image.useImageEditor &&
-						  editor.options.filebrowser.ajax.url
+							(editor.options.image.useImageEditor &&
+							editor.options.filebrowser.ajax.url
 								? '<a class="jodit_button jodit_use_image_editor" href="javascript:void(0)">' +
-								  ToolbarIcon.getIcon('crop') +
-								  '</a>'
+									ToolbarIcon.getIcon('crop') +
+									'</a>'
 								: '') +
-						  '</div>'
+							'</div>'
 						: '') +
 					'</div>' +
 					'</div>' +
@@ -404,9 +404,8 @@ export function imageProperties(editor: IJodit) {
 
 				lockMargin = !notequal;
 
-				const lock_margin: HTMLAnchorElement | null = prop.querySelector(
-					'.jodit_lock_margin'
-				);
+				const lock_margin: HTMLAnchorElement | null =
+					prop.querySelector('.jodit_lock_margin');
 
 				if (lock_margin) {
 					lock_margin.innerHTML = ToolbarIcon.getIcon(
@@ -440,17 +439,17 @@ export function imageProperties(editor: IJodit) {
 				) as HTMLAnchorElement;
 				if (a) {
 					val(prop, '.imageLink', a.getAttribute('href') || '');
-					(prop.querySelector(
-						'.imageLinkOpenInNewTab'
-					) as HTMLInputElement).checked =
-						a.getAttribute('target') === '_blank';
+					(
+						prop.querySelector(
+							'.imageLinkOpenInNewTab'
+						) as HTMLInputElement
+					).checked = a.getAttribute('target') === '_blank';
 				}
 			},
 			updateSrc = () => {
 				val(prop, '.imageSrc', image.getAttribute('src') || '');
-				const imageViewSrc: HTMLInputElement | null = prop.querySelector(
-					'.imageViewSrc'
-				);
+				const imageViewSrc: HTMLInputElement | null =
+					prop.querySelector('.imageViewSrc');
 				if (imageViewSrc) {
 					imageViewSrc.setAttribute(
 						'src',
@@ -501,10 +500,9 @@ export function imageProperties(editor: IJodit) {
 		});
 
 		if (editor.options.image.useImageEditor) {
-			($$(
-				'.jodit_use_image_editor',
-				mainTab
-			) as HTMLAnchorElement[]).forEach((btn: HTMLAnchorElement) => {
+			(
+				$$('.jodit_use_image_editor', mainTab) as HTMLAnchorElement[]
+			).forEach((btn: HTMLAnchorElement) => {
 				editor.events.on(btn, 'mousedown touchstart', () => {
 					const url: string = image.getAttribute('src') || '',
 						a = editor.create.element('a'),
@@ -556,20 +554,23 @@ export function imageProperties(editor: IJodit) {
 
 					a.href = url;
 
-					(editor.getInstance(
-						'FileBrowser'
-					) as IFileBrowser).dataProvider.getPathByUrl(
+					(
+						editor.getInstance('FileBrowser') as IFileBrowser
+					).dataProvider.getPathByUrl(
 						a.href.toString(),
 						(path: string, name: string, source: string) => {
-							(editor.getInstance(
-								'FileBrowser'
-							) as IFileBrowser).openImageEditor(
+							(
+								editor.getInstance(
+									'FileBrowser'
+								) as IFileBrowser
+							).openImageEditor(
 								a.href,
 								name,
 								path,
 								source,
 								() => {
-									const timestamp: number = new Date().getTime();
+									const timestamp: number =
+										new Date().getTime();
 									image.setAttribute(
 										'src',
 										url +
@@ -651,7 +652,7 @@ export function imageProperties(editor: IJodit) {
 			);
 
 		if (jodit_lock_size) {
-			jodit_lock_size.addEventListener('click', function() {
+			jodit_lock_size.addEventListener('click', function () {
 				lockSize = !lockSize;
 				this.innerHTML = ToolbarIcon.getIcon(
 					lockSize ? 'lock' : 'unlock'
@@ -661,7 +662,7 @@ export function imageProperties(editor: IJodit) {
 		}
 
 		if (jodit_lock_margin) {
-			jodit_lock_margin.addEventListener('click', function() {
+			jodit_lock_margin.addEventListener('click', function () {
 				lockMargin = !lockMargin;
 
 				this.innerHTML = ToolbarIcon.getIcon(
@@ -669,13 +670,13 @@ export function imageProperties(editor: IJodit) {
 				);
 
 				if (!lockMargin) {
-					$$('.margins', prop).forEach(elm => {
+					$$('.margins', prop).forEach((elm) => {
 						if (!elm.matches('.marginTop')) {
 							elm.removeAttribute('disabled');
 						}
 					});
 				} else {
-					$$('.margins', prop).forEach(elm => {
+					$$('.margins', prop).forEach((elm) => {
 						if (!elm.matches('.marginTop')) {
 							elm.setAttribute('disabled', 'true');
 						}
@@ -779,9 +780,11 @@ export function imageProperties(editor: IJodit) {
 
 				link.setAttribute('href', val(prop, '.imageLink'));
 				if (
-					(prop.querySelector(
-						'.imageLinkOpenInNewTab'
-					) as HTMLInputElement).checked
+					(
+						prop.querySelector(
+							'.imageLinkOpenInNewTab'
+						) as HTMLInputElement
+					).checked
 				) {
 					link.setAttribute('target', '_blank');
 				} else {
@@ -873,9 +876,7 @@ export function imageProperties(editor: IJodit) {
 					if (
 						css(image, 'float') &&
 						['right', 'left'].indexOf(
-							css(image, 'float')
-								.toString()
-								.toLowerCase()
+							css(image, 'float').toString().toLowerCase()
 						) !== -1
 					) {
 						css(image, 'float', '');
@@ -911,7 +912,7 @@ export function imageProperties(editor: IJodit) {
 				editor.events.on(
 					editor.editor,
 					'dblclick',
-					function(this: HTMLImageElement, event: MouseEvent) {
+					function (this: HTMLImageElement, event: MouseEvent) {
 						event.stopImmediatePropagation();
 						editor.selection.select(this);
 					},

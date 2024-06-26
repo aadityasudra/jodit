@@ -24,7 +24,7 @@ Config.prototype.controls.align = {
 			const currentBox: HTMLElement =
 				(Dom.closest(
 					current,
-					node => Dom.isBlock(node, editor.editorWindow),
+					(node) => Dom.isBlock(node, editor.editorWindow),
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
@@ -63,7 +63,7 @@ Config.prototype.controls.align = {
 			const currentBox: HTMLElement =
 				(Dom.closest(
 					current,
-					node => Dom.isBlock(node, editor.editorWindow),
+					(node) => Dom.isBlock(node, editor.editorWindow),
 					editor.editor
 				) as HTMLElement) || editor.editor;
 			return (
@@ -139,40 +139,38 @@ export function justify(editor: IJodit) {
 
 		editor.selection.focus();
 
-		editor.selection.eachSelection(
-			(current: Node): false | void => {
-				if (!current) {
-					if (editor.editor.querySelector('.jodit_selected_cell')) {
-						$$('.jodit_selected_cell', editor.editor).forEach(
-							justifyElm
-						);
-						return false;
-					}
-				}
-
-				if (!(current instanceof (editor.editorWindow as any).Node)) {
-					return;
-				}
-
-				let currentBox: HTMLElement | false | null = current
-					? (Dom.up(
-							current,
-							node => Dom.isBlock(node, editor.editorWindow),
-							editor.editor
-					  ) as HTMLElement)
-					: false;
-
-				if (!currentBox && current) {
-					currentBox = Dom.wrapInline(
-						current,
-						editor.options.enterBlock,
-						editor
+		editor.selection.eachSelection((current: Node): false | void => {
+			if (!current) {
+				if (editor.editor.querySelector('.jodit_selected_cell')) {
+					$$('.jodit_selected_cell', editor.editor).forEach(
+						justifyElm
 					);
+					return false;
 				}
-
-				justifyElm(currentBox as HTMLElement);
 			}
-		);
+
+			if (!(current instanceof (editor.editorWindow as any).Node)) {
+				return;
+			}
+
+			let currentBox: HTMLElement | false | null = current
+				? (Dom.up(
+						current,
+						(node) => Dom.isBlock(node, editor.editorWindow),
+						editor.editor
+					) as HTMLElement)
+				: false;
+
+			if (!currentBox && current) {
+				currentBox = Dom.wrapInline(
+					current,
+					editor.options.enterBlock,
+					editor
+				);
+			}
+
+			justifyElm(currentBox as HTMLElement);
+		});
 
 		return false;
 	};

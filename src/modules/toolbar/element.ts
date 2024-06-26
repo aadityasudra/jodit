@@ -19,7 +19,10 @@ import { Dom } from '../Dom';
 import { IViewBased, TagNames } from '../../types';
 import { trim } from '../helpers/string';
 
-export abstract class ToolbarElement extends Component implements IToolbarElement {
+export abstract class ToolbarElement
+	extends Component
+	implements IToolbarElement
+{
 	container: HTMLElement;
 	parentToolbar?: IToolbarCollection;
 

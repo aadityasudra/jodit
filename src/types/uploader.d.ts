@@ -172,7 +172,7 @@ export interface IUploaderOptions<T> {
 	format: string;
 	method: string;
 
-  filesVariableName: (i: number) => string;
+	filesVariableName: (i: number) => string;
 	pathVariableName: string;
 	withCredentials: boolean;
 

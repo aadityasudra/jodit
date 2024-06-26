@@ -39,11 +39,9 @@ export class Table {
 	): HTMLTableCellElement[] {
 		return table
 			? ($$(
-					`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${
-						consts.JODIT_SELECTED_CELL_MARKER
-					}]`,
+					`td[${consts.JODIT_SELECTED_CELL_MARKER}],th[${consts.JODIT_SELECTED_CELL_MARKER}]`,
 					table
-			  ) as HTMLTableCellElement[])
+				) as HTMLTableCellElement[])
 			: [];
 	}
 
@@ -372,7 +370,10 @@ export class Table {
 		table: HTMLTableElement,
 		selectedCells: HTMLTableCellElement[]
 	): number[][] {
-		const bound = [[Infinity, Infinity], [0, 0]];
+		const bound = [
+			[Infinity, Infinity],
+			[0, 0]
+		];
 		const box = Table.formalMatrix(table);
 		let i: number, j: number, k: number;
 
@@ -836,7 +837,7 @@ export class Table {
 	}
 
 	private static __unmark(__marked: HTMLTableCellElement[]) {
-		__marked.forEach(cell => {
+		__marked.forEach((cell) => {
 			if ((cell as any).__marked_value) {
 				each(
 					(cell as any).__marked_value,

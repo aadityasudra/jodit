@@ -46,8 +46,7 @@ export function size(editor: IJodit) {
 		editor.options.height !== 'auto' &&
 		(editor.options.allowResizeX || editor.options.allowResizeY)
 	) {
-		const
-			handle = editor.create.div(
+		const handle = editor.create.div(
 				'jodit_editor_resize',
 				'<a tabindex="-1" href="javascript:void(0)"></a>'
 			),
@@ -115,7 +114,7 @@ export function size(editor: IJodit) {
 		const minHeight: number =
 			(css(editor.container, 'minHeight') as number) - getNotWorkHeight();
 
-		[editor.workplace, editor.iframe, editor.editor].map(elm => {
+		[editor.workplace, editor.iframe, editor.editor].map((elm) => {
 			const minHeightD: number =
 				elm === editor.editor ? minHeight - 2 : minHeight; // borders
 			elm && css(elm as HTMLElement, 'minHeight', minHeightD);
@@ -172,9 +171,8 @@ export function size(editor: IJodit) {
 				let height: string | number = editor.options.height;
 
 				if (editor.options.saveHeightInStorage && height !== 'auto') {
-					const localHeight: string | null = editor.storage.get(
-						'height'
-					);
+					const localHeight: string | null =
+						editor.storage.get('height');
 					if (localHeight) {
 						height = localHeight;
 					}

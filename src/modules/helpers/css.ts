@@ -28,7 +28,8 @@ export const css = (
 	value?: string | number,
 	onlyStyleMode: boolean = false
 ): string | number => {
-	const numberFieldsReg = /^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
+	const numberFieldsReg =
+		/^left|top|bottom|right|width|min|max|height|margin|padding|font-size/i;
 
 	if (isPlainObject(key) || value !== undefined) {
 		const setValue = (
@@ -77,8 +78,8 @@ export const css = (
 		currentValue !== undefined && currentValue !== ''
 			? currentValue
 			: win && !onlyStyleMode
-			? win.getComputedStyle(element).getPropertyValue(key2)
-			: '';
+				? win.getComputedStyle(element).getPropertyValue(key2)
+				: '';
 
 	if (
 		numberFieldsReg.test(key as string) &&

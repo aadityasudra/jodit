@@ -108,10 +108,10 @@ export class search extends Plugin {
 				? startAtIndex
 				: false
 			: tmp.length
-			? start
-				? tmp.join('')
-				: tmp.reverse().join('')
-			: false;
+				? start
+					? tmp.join('')
+					: tmp.reverse().join('')
+				: false;
 	}
 
 	private template: string =
@@ -202,7 +202,7 @@ export class search extends Plugin {
 		// find scrollable element
 		let parentBox: HTMLElement | false = Dom.closest(
 			startContainer,
-			elm => elm && elm.nodeType === Node.ELEMENT_NODE,
+			(elm) => elm && elm.nodeType === Node.ELEMENT_NODE,
 			this.jodit.editor
 		) as HTMLElement | false;
 
@@ -265,8 +265,7 @@ export class search extends Plugin {
 		return [currentIndex, count];
 	};
 	public findAndReplace = (start: Node | null, query: string): boolean => {
-		const
-			range = this.jodit.selection.range,
+		const range = this.jodit.selection.range,
 			bound: ISelectionRange | false = this.find(
 				start,
 				query,
@@ -288,9 +287,10 @@ export class search extends Plugin {
 					rng.setEnd(bound.endContainer, bound.endOffset as number);
 					rng.deleteContents();
 
-					const textNode: Node = this.jodit.editorDocument.createTextNode(
-						this.replaceInput.value
-					);
+					const textNode: Node =
+						this.jodit.editorDocument.createTextNode(
+							this.replaceInput.value
+						);
 
 					rng.insertNode(textNode);
 					this.jodit.selection.select(textNode);
@@ -384,22 +384,20 @@ export class search extends Plugin {
 							? sentence + value
 							: value + sentence;
 
-						const part:
-							| boolean
-							| string = search.findSomePartOfString(
-							query,
-							tmpSentence,
-							next
-						) as boolean | string;
+						const part: boolean | string =
+							search.findSomePartOfString(
+								query,
+								tmpSentence,
+								next
+							) as boolean | string;
 
 						if (part !== false) {
-							let currentPart:
-								| string
-								| boolean = search.findSomePartOfString(
-								query,
-								value,
-								next
-							) as string | boolean;
+							let currentPart: string | boolean =
+								search.findSomePartOfString(
+									query,
+									value,
+									next
+								) as string | boolean;
 
 							if (currentPart === true) {
 								currentPart = trim(query);
@@ -438,7 +436,9 @@ export class search extends Plugin {
 							} else {
 								bound.endContainer = elm;
 								bound.endOffset = currentPartIndex;
-								bound.endOffset += (currentPart as string).length;
+								bound.endOffset += (
+									currentPart as string
+								).length;
 
 								return true;
 							}
@@ -581,18 +581,19 @@ export class search extends Plugin {
 					e.preventDefault();
 					e.stopImmediatePropagation();
 				})
-				.on([self.nextButton, self.prevButton], 'click', function(
-					this: HTMLButtonElement,
-					e: MouseEvent
-				) {
-					editor.events.fire(
-						self.nextButton === this
-							? 'searchNext'
-							: 'searchPrevious'
-					);
-					e.preventDefault();
-					e.stopImmediatePropagation();
-				})
+				.on(
+					[self.nextButton, self.prevButton],
+					'click',
+					function (this: HTMLButtonElement, e: MouseEvent) {
+						editor.events.fire(
+							self.nextButton === this
+								? 'searchNext'
+								: 'searchPrevious'
+						);
+						e.preventDefault();
+						e.stopImmediatePropagation();
+					}
+				)
 				.on(
 					this.queryInput,
 					'keydown',

@@ -5,14 +5,18 @@ export class ObserveObject {
 		Object.keys(data).forEach((key) => {
 			Object.defineProperty(this, key, {
 				set: (value) => {
-					this.fire(['beforeChange', `beforeChange.${key}`], key, value);
+					this.fire(
+						['beforeChange', `beforeChange.${key}`],
+						key,
+						value
+					);
 					data[key] = value;
 					this.fire(['change', `change.${key}`], key, value);
 				},
 				get: () => {
 					return data[key];
 				}
-			})
+			});
 		});
 	}
 
@@ -44,14 +48,19 @@ export class ObserveObject {
 		try {
 			if (!this.__lockEvent[event] && this.__onEvents[event]) {
 				this.__lockEvent[event] = true;
-				this.__onEvents[event].forEach(clb => clb.call(this, ...attr));
+				this.__onEvents[event].forEach((clb) =>
+					clb.call(this, ...attr)
+				);
 			}
-		} catch {} finally {
+		} catch {
+		} finally {
 			this.__lockEvent[event] = false;
 		}
 	}
 
-	static create<T, K extends T & ObserveObject = T & ObserveObject>(data: T): K {
-		return (new ObserveObject(data)) as any;
+	static create<T, K extends T & ObserveObject = T & ObserveObject>(
+		data: T
+	): K {
+		return new ObserveObject(data) as any;
 	}
 }

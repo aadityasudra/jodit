@@ -24,7 +24,6 @@ import { default as zh_tw } from './zh_tw';
 
 import { default as en } from './en';
 
-
 const exp: any = {
 	ar,
 	de,

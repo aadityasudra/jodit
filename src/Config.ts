@@ -795,9 +795,8 @@ export class Config implements IViewOptions {
 	}
 }
 
-export const OptionsDefault: any = function(this: any, options: any) {
-	const
-		def = Config.defaultOptions,
+export const OptionsDefault: any = function (this: any, options: any) {
+	const def = Config.defaultOptions,
 		self: any = this;
 
 	self.plainOptions = options;
@@ -812,8 +811,7 @@ export const OptionsDefault: any = function(this: any, options: any) {
 				}
 			}
 
-			const
-				defValue = (def as any)[key],
+			const defValue = (def as any)[key],
 				isObject = typeof defValue === 'object' && defValue !== null;
 
 			if (
@@ -821,13 +819,7 @@ export const OptionsDefault: any = function(this: any, options: any) {
 				!['ownerWindow', 'ownerDocument'].includes(key) &&
 				!Array.isArray(defValue)
 			) {
-				self[key] = extend(
-					true,
-					{},
-					defValue,
-					(opt as any)[key]
-				);
-
+				self[key] = extend(true, {}, defValue, (opt as any)[key]);
 			} else {
 				self[key] = (opt as any)[key];
 			}
@@ -895,7 +887,7 @@ Config.prototype.controls = {
 						!isLicense(editor.options.license)
 							? editor.i18n(
 									'GNU General Public License, version 2 or later'
-							  )
+								)
 							: normalizeLicense(editor.options.license)
 					) +
 					'</div>' +
@@ -1036,7 +1028,7 @@ Config.prototype.controls = {
 								current,
 								'A',
 								editor.editor
-						  ) as HTMLAnchorElement);
+							) as HTMLAnchorElement);
 			}
 
 			return FileSelectorWidget(
@@ -1116,16 +1108,20 @@ Config.prototype.controls = {
 				] = bycode;
 			}
 
-			bycode.addEventListener('submit', event => {
+			bycode.addEventListener('submit', (event) => {
 				event.preventDefault();
 
 				if (!trim(val(bycode, 'textarea[name=code]'))) {
-					(bycode.querySelector(
-						'textarea[name=code]'
-					) as HTMLTextAreaElement).focus();
-					(bycode.querySelector(
-						'textarea[name=code]'
-					) as HTMLTextAreaElement).classList.add('jodit_error');
+					(
+						bycode.querySelector(
+							'textarea[name=code]'
+						) as HTMLTextAreaElement
+					).focus();
+					(
+						bycode.querySelector(
+							'textarea[name=code]'
+						) as HTMLTextAreaElement
+					).classList.add('jodit_error');
 					return false;
 				}
 
@@ -1133,15 +1129,19 @@ Config.prototype.controls = {
 				return false;
 			});
 
-			bylink.addEventListener('submit', event => {
+			bylink.addEventListener('submit', (event) => {
 				event.preventDefault();
 				if (!isURL(val(bylink, 'input[name=code]'))) {
-					(bylink.querySelector(
-						'input[name=code]'
-					) as HTMLInputElement).focus();
-					(bylink.querySelector(
-						'input[name=code]'
-					) as HTMLInputElement).classList.add('jodit_error');
+					(
+						bylink.querySelector(
+							'input[name=code]'
+						) as HTMLInputElement
+					).focus();
+					(
+						bylink.querySelector(
+							'input[name=code]'
+						) as HTMLInputElement
+					).classList.add('jodit_error');
 					return false;
 				}
 				insertCode(
