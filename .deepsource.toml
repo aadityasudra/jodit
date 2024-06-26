@@ -1,0 +1,52 @@
+version = 1
+
+[[analyzers]]
+name = "ansible"
+
+[[analyzers]]
+name = "shell"
+
+[[analyzers]]
+name = "sql"
+
+[[analyzers]]
+name = "test-coverage"
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  plugins = [
+    "react",
+    "vue",
+    "ember",
+    "meteor",
+    "angularjs",
+    "angular"
+  ]
+  environment = [
+    "nodejs",
+    "jquery",
+    "mongo",
+    "browser",
+    "jest",
+    "cypress",
+    "vitest",
+    "mocha",
+    "jasmine"
+  ]
+
+[[analyzers]]
+name = "secrets"
+
+[[analyzers]]
+name = "php"
+
+[[transformers]]
+name = "php-cs-fixer"
+
+[[transformers]]
+name = "prettier"
+
+[[transformers]]
+name = "standardjs"
