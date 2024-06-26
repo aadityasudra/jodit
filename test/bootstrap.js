@@ -1,7 +1,6 @@
 typeof window.chai !== 'undefined' && (chai.config.includeStack = true);
 
-var
-	oldI18n = Jodit.prototype.i18n,
+var oldI18n = Jodit.prototype.i18n,
 	oldAjaxSender = Jodit.modules.Ajax.prototype.send,
 	naturalPromise = window.Promise;
 
@@ -34,17 +33,17 @@ var defaultPermissions = {
 if (typeof window.chai !== 'undefined') {
 	mocPromise();
 
-	window.FormData = function() {
+	window.FormData = function () {
 		this.data = {};
-		this.append = function(key, value) {
+		this.append = function (key, value) {
 			this.data[key] = value;
 		};
-		this.get = function(key) {
+		this.get = function (key) {
 			return this.data[key];
 		};
 	};
 
-	Jodit.modules.Ajax.prototype.send = function(data) {
+	Jodit.modules.Ajax.prototype.send = function (data) {
 		var ajax = this,
 			action = ajax.options.data.action;
 
@@ -61,7 +60,7 @@ if (typeof window.chai !== 'undefined') {
 			action = actioExec[1];
 		}
 
-		return new Promise(function(resolve, reject) {
+		return new Promise(function (resolve, reject) {
 			switch (action) {
 				case 'fileUpload':
 					var file = ajax.options.data.get('files[0]');
@@ -88,10 +87,8 @@ if (typeof window.chai !== 'undefined') {
 									path: '',
 									files: [
 										{
-											file:
-												'1966051_524428741092238_1051008806888563137_o.jpg',
-											thumb:
-												'_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
+											file: '1966051_524428741092238_1051008806888563137_o.jpg',
+											thumb: '_thumbs/1966051_524428741092238_1051008806888563137_o.jpg',
 											changed: '03/15/2018 12:40 PM',
 											size: '126.59kB',
 											isImage: true
@@ -105,8 +102,7 @@ if (typeof window.chai !== 'undefined') {
 										},
 										{
 											file: 'ibanez-s520-443140.jpg',
-											thumb:
-												'_thumbs/ibanez-s520-443140.jpg',
+											thumb: '_thumbs/ibanez-s520-443140.jpg',
 											changed: '04/15/2018 12:40 PM',
 											size: '18.73kB',
 											isImage: true
@@ -163,17 +159,17 @@ if (typeof window.chai !== 'undefined') {
 				case 'getLocalFileByUrl':
 					switch (ajax.options.data.url) {
 						case location.protocol +
-						'//' +
-						location.host +
-						'/tests/artio.jpg':
+							'//' +
+							location.host +
+							'/tests/artio.jpg':
 						case location.protocol +
-						'//' +
-						location.host +
-						'/test/tests/artio.jpg':
+							'//' +
+							location.host +
+							'/test/tests/artio.jpg':
 						case location.protocol +
-						'//' +
-						location.host +
-						'/jodit/test/tests/artio.jpg':
+							'//' +
+							location.host +
+							'/jodit/test/tests/artio.jpg':
 						case 'https://xdsoft.net/jodit/files/th.jpg':
 							resolve({
 								success: true,
@@ -209,10 +205,10 @@ if (typeof window.chai !== 'undefined') {
 
 var i18nkeys = [];
 
-Jodit.prototype.i18n = function(key) {
+Jodit.prototype.i18n = function (key) {
 	i18nkeys.indexOf(key) === -1 &&
-	key.indexOf('<svg') === -1 &&
-	i18nkeys.push(key);
+		key.indexOf('<svg') === -1 &&
+		i18nkeys.push(key);
 	return oldI18n.apply(this, arguments);
 };
 
@@ -241,7 +237,7 @@ td,th {\
 }';
 
 if (String.prototype.repeat === undefined) {
-	String.prototype.repeat = function(count) {
+	String.prototype.repeat = function (count) {
 		var result = [];
 		for (var i = 0; i < count; i++) {
 			result.push(this);
@@ -250,29 +246,25 @@ if (String.prototype.repeat === undefined) {
 	};
 }
 
-(function(e) {
+(function (e) {
 	e.matches ||
-	(e.matches =
-		e['matchesSelector'] !== undefined
-			? e['matchesSelector']
-			: function(selector) {
-				const matches = this.ownerDocument.querySelectorAll(
-					selector
-					),
-					th = this;
-				return Array.prototype.some.call(matches, function(e) {
-					return e === th;
-				});
-			});
+		(e.matches =
+			e['matchesSelector'] !== undefined
+				? e['matchesSelector']
+				: function (selector) {
+						const matches =
+								this.ownerDocument.querySelectorAll(selector),
+							th = this;
+						return Array.prototype.some.call(matches, function (e) {
+							return e === th;
+						});
+					});
 })(Element.prototype);
 
-var
-	expect = typeof chai !== 'undefined' ? chai.expect : function() {
-	},
+var expect = typeof chai !== 'undefined' ? chai.expect : function () {},
 	stuff = [];
 
-var
-	box = document.createElement('div');
+var box = document.createElement('div');
 
 document.body.appendChild(box);
 
@@ -281,22 +273,22 @@ function getBox() {
 }
 
 function removeStuff() {
-	Object.keys(Jodit.instances).forEach(function(key) {
+	Object.keys(Jodit.instances).forEach(function (key) {
 		Jodit.instances[key].destruct();
 	});
 
-	stuff.forEach(function(elm) {
+	stuff.forEach(function (elm) {
 		elm && elm.parentNode && elm.parentNode.removeChild(elm);
 		delete elm;
 	});
 
 	stuff.length = 0;
 
-	Array
-		.from(document.querySelectorAll('.jodit.jodit_dialog_box.active'))
-		.forEach(function(dialog) {
-			simulateEvent('close_dialog', 0, dialog);
-		});
+	Array.from(
+		document.querySelectorAll('.jodit.jodit_dialog_box.active')
+	).forEach(function (dialog) {
+		simulateEvent('close_dialog', 0, dialog);
+	});
 
 	mocPromise();
 }
@@ -337,17 +329,17 @@ function toFixedWithoutRounding(value, precision) {
 
 function sortStyles(matches) {
 	var styles = matches
-		.replace(/&quot;/g, '\'')
-		.replace(/"/g, '\'')
+		.replace(/&quot;/g, "'")
+		.replace(/"/g, "'")
 		.split(';');
 
-	styles = styles.map(trim).filter(function(elm) {
+	styles = styles.map(trim).filter(function (elm) {
 		return elm.length;
 	});
 
 	var border = null;
 	styles = styles
-		.map(function(elm) {
+		.map(function (elm) {
 			var keyvalue = elm.split(':').map(trim);
 
 			if (keyvalue[0] === 'border-image') {
@@ -355,11 +347,12 @@ function sortStyles(matches) {
 			}
 
 			if (/rgb\(/.test(keyvalue[1])) {
-				keyvalue[1] = keyvalue[1].replace(/rgb\([^\)]+\)/, function(
-					match
-				) {
-					return Jodit.modules.Helpers.normalizeColor(match);
-				});
+				keyvalue[1] = keyvalue[1].replace(
+					/rgb\([^\)]+\)/,
+					function (match) {
+						return Jodit.modules.Helpers.normalizeColor(match);
+					}
+				);
 			}
 
 			if (keyvalue[0].match(/^border$/)) {
@@ -394,19 +387,19 @@ function sortStyles(matches) {
 
 			return keyvalue;
 		})
-		.filter(function(a) {
+		.filter(function (a) {
 			return a !== null;
 		})
-		.map(function(a) {
+		.map(function (a) {
 			return a
-				.map(function(item) {
+				.map(function (item) {
 					return typeof item === 'string'
 						? item
 						: item.sort().join(' ');
 				})
 				.join(':');
 		})
-		.sort(function(a, b) {
+		.sort(function (a, b) {
 			return a < b ? -1 : a > b ? 1 : 0;
 		});
 
@@ -449,11 +442,11 @@ function sortAttributes(html) {
 			}
 		} while (matches);
 
-		attrs.sort(function(a, b) {
+		attrs.sort(function (a, b) {
 			return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
 		});
 
-		attrs.forEach(function(elm, i) {
+		attrs.forEach(function (elm, i) {
 			newtag = newtag.replace(
 				'attribute:' + (i + 1),
 				elm.name + '="' + elm.value + '"'
@@ -466,7 +459,7 @@ function sortAttributes(html) {
 		});
 	}
 
-	tags.forEach(function(elm, i) {
+	tags.forEach(function (elm, i) {
 		html = html.replace(elm.name, elm.value);
 	});
 
@@ -491,7 +484,7 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	}
 
 	if (type.match(/^mouse/)) {
-		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
+		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function (key) {
 			if (evt[key] === undefined) {
 				evt[key] = 0;
 			}
@@ -501,7 +494,7 @@ function simulateEvent(type, keyCodeArg, element, options) {
 	if (type.match(/^touch/) && !evt.changedTouches) {
 		var changedTouches = {};
 
-		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function(key) {
+		['pageX', 'pageY', 'clientX', 'clientY'].forEach(function (key) {
 			changedTouches[key] = evt[key];
 		});
 
@@ -524,8 +517,8 @@ function createPoint(x, y, color) {
 	div.setAttribute(
 		'style',
 		'position: absolute; z-index: 1000000000;width: 5px; height: 5px; background: ' +
-		(color || 'red') +
-		';'
+			(color || 'red') +
+			';'
 	);
 	div.style.left = parseInt(x, 10) + 'px';
 	div.style.top = parseInt(y, 10) + 'px';
@@ -558,8 +551,8 @@ function offset(el) {
  * I haven't decided on the best name for this property - thus the duplication.
  */
 
-(function() {
-	var serializeXML = function(node, output) {
+(function () {
+	var serializeXML = function (node, output) {
 		var nodeType = node.nodeType;
 		if (nodeType == 3) {
 			// TEXT nodes.
@@ -578,7 +571,7 @@ function offset(el) {
 				var attrMap = node.attributes;
 				for (var i = 0, len = attrMap.length; i < len; ++i) {
 					var attrNode = attrMap.item(i);
-					output.push(' ', attrNode.name, '=\'', attrNode.value, '\'');
+					output.push(' ', attrNode.name, "='", attrNode.value, "'");
 				}
 			}
 			if (node.hasChildNodes()) {
@@ -603,7 +596,7 @@ function offset(el) {
 	};
 	// The innerHTML DOM property for SVGElement.
 	Object.defineProperty(SVGElement.prototype, 'innerHTML', {
-		get: function() {
+		get: function () {
 			var output = [];
 			var childNode = this.firstChild;
 			while (childNode) {
@@ -612,7 +605,7 @@ function offset(el) {
 			}
 			return output.join('');
 		},
-		set: function(markupText) {
+		set: function (markupText) {
 			// Wipe out the current contents of the element.
 			while (this.firstChild) {
 				this.removeChild(this.firstChild);
@@ -624,11 +617,13 @@ function offset(el) {
 				dXML.async = false;
 				// Wrap the markup into a SVG node to ensure parsing works.
 				sXML =
-					'<svg xmlns=\'http://www.w3.org/2000/svg\'>' +
+					"<svg xmlns='http://www.w3.org/2000/svg'>" +
 					markupText +
 					'</svg>';
-				var svgDocElement = dXML.parseFromString(sXML, 'text/xml')
-					.documentElement;
+				var svgDocElement = dXML.parseFromString(
+					sXML,
+					'text/xml'
+				).documentElement;
 
 				// Now take each node, import it and append to this element.
 				var childNode = svgDocElement.firstChild;
@@ -646,10 +641,10 @@ function offset(el) {
 
 	// The innerSVG DOM property for SVGElement.
 	Object.defineProperty(SVGElement.prototype, 'innerSVG', {
-		get: function() {
+		get: function () {
 			return this.innerHTML;
 		},
-		set: function(markupText) {
+		set: function (markupText) {
 			this.innerHTML = markupText;
 		}
 	});
@@ -674,14 +669,14 @@ function FileXLS() {
 }
 
 if (typeof window.chai !== 'undefined') {
-	window.FileReader = function() {
+	window.FileReader = function () {
 		var self = this;
 		self.result = null;
 		/**
 		 *
 		 * @param {FileImage} file
 		 */
-		self.readAsDataURL = function(file) {
+		self.readAsDataURL = function (file) {
 			self.result = file.dataURI;
 			self.onloadend && self.onloadend();
 		};
@@ -689,6 +684,5 @@ if (typeof window.chai !== 'undefined') {
 }
 
 Object.defineProperty(navigator, 'userAgent', {
-	value:
-		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
+	value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
 });

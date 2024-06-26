@@ -229,5 +229,5 @@ export default {
 	rename: 'umbenennen',
 	'Enter new name': 'Geben Sie einen neuen Namen ein',
 	preview: 'Vorschau',
-	download: 'Herunterladen',
+	download: 'Herunterladen'
 } as IDictionary<string>;

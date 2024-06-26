@@ -172,9 +172,10 @@ export function addNewLine(editor: IJodit) {
 						);
 						const top: number =
 							e.pageY - editor.editorWindow.pageYOffset;
-						const p: HTMLElement = editor.editorDocument.createElement(
-							editor.options.enter
-						);
+						const p: HTMLElement =
+							editor.editorDocument.createElement(
+								editor.options.enter
+							);
 
 						if (
 							Math.abs(top - editorBound.top) <
@@ -201,10 +202,11 @@ export function addNewLine(editor: IJodit) {
 					editor.editor,
 					'mousemove',
 					debounce((e: MouseEvent) => {
-						let currentElement: HTMLElement = editor.editorDocument.elementFromPoint(
-							e.pageX - editor.editorWindow.pageXOffset,
-							e.pageY - editor.editorWindow.pageYOffset
-						) as HTMLElement;
+						let currentElement: HTMLElement =
+							editor.editorDocument.elementFromPoint(
+								e.pageX - editor.editorWindow.pageXOffset,
+								e.pageY - editor.editorWindow.pageYOffset
+							) as HTMLElement;
 
 						if (
 							currentElement &&
@@ -239,7 +241,8 @@ export function addNewLine(editor: IJodit) {
 						if (isMatchedTag.test(currentElement.nodeName)) {
 							const parentBox: Node | false = Dom.up(
 								currentElement,
-								node => Dom.isBlock(node, editor.editorWindow),
+								(node) =>
+									Dom.isBlock(node, editor.editorWindow),
 								editor.editor
 							);
 							if (parentBox && parentBox !== editor.editor) {

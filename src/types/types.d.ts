@@ -38,7 +38,7 @@ export interface IPoint {
 	y: number;
 }
 
-export interface IPointBound extends IPoint{
+export interface IPointBound extends IPoint {
 	w: number;
 	h: number;
 }

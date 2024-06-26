@@ -279,9 +279,8 @@ export class source extends Plugin {
 			this.selInfo.length = 0;
 			const value: string = this.getMirrorValue();
 			if (this.getSelectionStart() === this.getSelectionEnd()) {
-				const marker: HTMLSpanElement = this.jodit.selection.marker(
-					true
-				);
+				const marker: HTMLSpanElement =
+					this.jodit.selection.marker(true);
 				this.selInfo[0] = {
 					startId: marker.id,
 					collapsed: true,
@@ -297,12 +296,10 @@ export class source extends Plugin {
 						value.substr(selectionStart)
 				);
 			} else {
-				const markerStart: HTMLSpanElement = this.jodit.selection.marker(
-					true
-				);
-				const markerEnd: HTMLSpanElement = this.jodit.selection.marker(
-					false
-				);
+				const markerStart: HTMLSpanElement =
+					this.jodit.selection.marker(true);
+				const markerEnd: HTMLSpanElement =
+					this.jodit.selection.marker(false);
 
 				this.selInfo[0] = {
 					startId: markerStart.id,
@@ -492,10 +489,9 @@ export class source extends Plugin {
 						this.mirrorContainer.firstChild
 					);
 
-					this.aceEditor = aceEditor = ((this.jodit
-						.ownerWindow as any).ace as AceAjax.Ace).edit(
-						fakeMirror
-					);
+					this.aceEditor = aceEditor = (
+						(this.jodit.ownerWindow as any).ace as AceAjax.Ace
+					).edit(fakeMirror);
 
 					aceEditor.setTheme(
 						editor.options.sourceEditorNativeOptions.theme
@@ -564,7 +560,8 @@ export class source extends Plugin {
 					};
 
 					this.getSelectionStart = (): number => {
-						const range: AceAjax.Range = aceEditor.selection.getRange();
+						const range: AceAjax.Range =
+							aceEditor.selection.getRange();
 						return getIndexByRowColumn(
 							range.start.row,
 							range.start.column
@@ -572,7 +569,8 @@ export class source extends Plugin {
 					};
 
 					this.getSelectionEnd = (): number => {
-						const range: AceAjax.Range = aceEditor.selection.getRange();
+						const range: AceAjax.Range =
+							aceEditor.selection.getRange();
 						return getIndexByRowColumn(
 							range.end.row,
 							range.end.column
@@ -583,7 +581,8 @@ export class source extends Plugin {
 						aceEditor.selection.selectAll();
 					};
 					this.insertHTML = (html: string) => {
-						const start: AceAjax.Position = aceEditor.selection.getCursor(),
+						const start: AceAjax.Position =
+								aceEditor.selection.getCursor(),
 							end: AceAjax.Position = aceEditor.session.insert(
 								start,
 								html
@@ -627,28 +626,25 @@ export class source extends Plugin {
 				this.fromWYSIWYG();
 				tryInitAceEditor();
 			})
-			.on(
-				'beforeCommand',
-				(command: string): false | void => {
+			.on('beforeCommand', (command: string): false | void => {
+				if (
+					editor.getRealMode() !== consts.MODE_WYSIWYG &&
+					(command === 'redo' || command === 'undo') &&
+					undoManager
+				) {
 					if (
-						editor.getRealMode() !== consts.MODE_WYSIWYG &&
-						(command === 'redo' || command === 'undo') &&
-						undoManager
+						(undoManager as any)[
+							'has' +
+								command.substr(0, 1).toUpperCase() +
+								command.substr(1)
+						]
 					) {
-						if (
-							(undoManager as any)[
-								'has' +
-									command.substr(0, 1).toUpperCase() +
-									command.substr(1)
-							]
-						) {
-							aceEditor[command]();
-						}
-						updateButtons();
-						return false;
+						aceEditor[command]();
 					}
+					updateButtons();
+					return false;
 				}
-			);
+			});
 
 		tryInitAceEditor();
 
@@ -729,18 +725,12 @@ export class source extends Plugin {
 			.on('setMinHeight.source', (minHeightD: number) => {
 				this.mirror && css(this.mirror, 'minHeight', minHeightD);
 			})
-			.on(
-				'insertHTML.source',
-				(html: string): void | false => {
-					if (
-						!editor.options.readonly &&
-						!this.jodit.isEditorMode()
-					) {
-						this.insertHTML(html);
-						return false;
-					}
+			.on('insertHTML.source', (html: string): void | false => {
+				if (!editor.options.readonly && !this.jodit.isEditorMode()) {
+					this.insertHTML(html);
+					return false;
 				}
-			)
+			})
 			.on(
 				'aceInited',
 				() => {

@@ -40,7 +40,9 @@ export class EventHandlersStore {
 
 	namespaces(withoutDefault: boolean = false): string[] {
 		const nss = Object.keys(this.__store);
-		return withoutDefault ? nss.filter(ns => ns !== defaultNameSpace) : nss;
+		return withoutDefault
+			? nss.filter((ns) => ns !== defaultNameSpace)
+			: nss;
 	}
 
 	events(namespace: string): string[] {

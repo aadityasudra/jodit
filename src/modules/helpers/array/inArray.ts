@@ -8,6 +8,6 @@
  */
 
 export const inArray = (
-    needle: string | number,
-    haystack: Array<number | string>
+	needle: string | number,
+	haystack: Array<number | string>
 ): boolean => haystack.indexOf(needle) !== -1;

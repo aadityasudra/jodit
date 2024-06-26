@@ -16,16 +16,16 @@ import { trim } from '../string';
  */
 export const normalizePath = (...path: string[]) => {
 	return path
-		.filter(part => trim(part).length)
+		.filter((part) => trim(part).length)
 		.map((part, index) => {
 			part = part.replace(/([^:])[\\\/]+/g, '$1/');
 
 			if (index) {
-				part = part.replace(/^\//, '')
+				part = part.replace(/^\//, '');
 			}
 
 			if (index !== path.length - 1) {
-				part = part.replace(/\/$/, '')
+				part = part.replace(/\/$/, '');
 			}
 
 			return part;

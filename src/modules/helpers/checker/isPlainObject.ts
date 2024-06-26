@@ -16,12 +16,12 @@ import { hasOwn } from '../type';
  * @param obj
  */
 export const isPlainObject = (obj: any): boolean => {
-    if (typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
-        return false;
-    }
+	if (typeof obj !== 'object' || obj.nodeType || isWindow(obj)) {
+		return false;
+	}
 
-    return !(
-        obj.constructor &&
-        !hasOwn.call(obj.constructor.prototype, 'isPrototypeOf')
-    );
+	return !(
+		obj.constructor &&
+		!hasOwn.call(obj.constructor.prototype, 'isPrototypeOf')
+	);
 };

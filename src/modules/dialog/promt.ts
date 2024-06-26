@@ -43,7 +43,6 @@ export const Promt = (
 				Jodit.prototype.i18n('Cancel') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-
 		okButton: HTMLAnchorElement = dialog.create.fromHTML(
 			'<a href="javascript:void(0)" style="float:left;" class="jodit_button">' +
 				ToolbarIcon.getIcon('check') +
@@ -51,16 +50,13 @@ export const Promt = (
 				Jodit.prototype.i18n('Ok') +
 				'</span></a>'
 		) as HTMLAnchorElement,
-
 		form: HTMLFormElement = dialog.create.element('form', {
 			class: 'jodit_promt'
 		}),
-
 		inputElement: HTMLInputElement = dialog.create.element('input', {
 			autofocus: true,
 			class: 'jodit_input'
 		}),
-
 		labelElement: HTMLLabelElement = dialog.create.element(
 			'label'
 		) as HTMLLabelElement;

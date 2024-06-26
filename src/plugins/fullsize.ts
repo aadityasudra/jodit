@@ -104,9 +104,8 @@ export function fullsize(editor: IViewWithToolbar) {
 			}
 
 			if (condition === undefined) {
-				condition = !editor.container.classList.contains(
-					'jodit_fullsize'
-				);
+				condition =
+					!editor.container.classList.contains('jodit_fullsize');
 			}
 
 			editor.options.fullsize = !!condition;

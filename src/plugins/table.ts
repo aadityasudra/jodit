@@ -64,9 +64,7 @@ Config.prototype.controls.table = {
 
 				Object.keys(classList).forEach((classes: string) => {
 					out.push(
-						`<label><input value="${classes}" type="checkbox"/>${
-							classList[classes]
-						}</label>`
+						`<label><input value="${classes}" type="checkbox"/>${classList[classes]}</label>`
 					);
 				});
 			}
@@ -216,7 +214,7 @@ Config.prototype.controls.table = {
 				if (crnt && editor.selection.isCollapsed()) {
 					const block: HTMLElement | false = Dom.closest(
 						crnt,
-						node => Dom.isBlock(node, editor.editorWindow),
+						(node) => Dom.isBlock(node, editor.editorWindow),
 						editor.editor
 					) as HTMLElement | false;
 
@@ -391,23 +389,26 @@ export class TableProcessor extends Plugin {
 							);
 
 							let box: ClientRect,
-								tableBox: ClientRect = this.__workTable.getBoundingClientRect();
+								tableBox: ClientRect =
+									this.__workTable.getBoundingClientRect();
 
 							this.__minX = 0;
 							this.__maxX = 1000000;
 
 							if (this.__wholeTable !== null) {
-								tableBox = (this.__workTable
-									.parentNode as HTMLElement).getBoundingClientRect();
+								tableBox = (
+									this.__workTable.parentNode as HTMLElement
+								).getBoundingClientRect();
 								this.__minX = tableBox.left;
 								this.__maxX = tableBox.left + tableBox.width;
 							} else {
 								// find maximum columns
-								const coordinate: number[] = Table.formalCoordinate(
-									this.__workTable,
-									this.__workCell,
-									true
-								);
+								const coordinate: number[] =
+									Table.formalCoordinate(
+										this.__workTable,
+										this.__workCell,
+										true
+									);
 
 								Table.formalMatrix(
 									this.__workTable,
@@ -596,7 +597,7 @@ export class TableProcessor extends Plugin {
 						break;
 					case 'empty':
 						Table.getAllSelectedCells(this.jodit.editor).forEach(
-							td => (td.innerHTML = '')
+							(td) => (td.innerHTML = '')
 						);
 						break;
 					case 'bin':
@@ -931,13 +932,15 @@ export class TableProcessor extends Plugin {
 				);
 			})
 			.on('beforeSetMode.table', () => {
-				Table.getAllSelectedCells(editor.editor).forEach(td => {
+				Table.getAllSelectedCells(editor.editor).forEach((td) => {
 					Table.restoreSelection(td);
-					Table.normalizeTable(Dom.closest(
-						td,
-						'table',
-						editor.editor
-					) as HTMLTableElement);
+					Table.normalizeTable(
+						Dom.closest(
+							td,
+							'table',
+							editor.editor
+						) as HTMLTableElement
+					);
 				});
 			})
 			.on('keydown.table', (event: KeyboardEvent) => {

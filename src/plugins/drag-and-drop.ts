@@ -100,9 +100,9 @@ export class DragAndDrop extends Plugin {
 					fragment = dataBind(this.draggable, 'target');
 				}
 			} else if (this.getText(event)) {
-				fragment = this.jodit.create.inside.fromHTML(this.getText(
-					event
-				) as string);
+				fragment = this.jodit.create.inside.fromHTML(
+					this.getText(event) as string
+				);
 			}
 
 			sel && sel.removeAllRanges();

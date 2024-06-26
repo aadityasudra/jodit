@@ -15,19 +15,19 @@ import { Ajax } from '../Ajax';
 export const DEFAULT_SOURCE_NAME = 'default';
 
 const possableRules = [
-	"allowFiles",
-	"allowFileMove",
-	"allowFileUpload",
-	"allowFileUploadRemote",
-	"allowFileRemove",
-	"allowFileRename",
-	"allowFolders",
-	"allowFolderMove",
-	"allowFolderCreate",
-	"allowFolderRemove",
-	"allowFolderRename",
-	"allowImageResize",
-	"allowImageCrop"
+	'allowFiles',
+	'allowFileMove',
+	'allowFileUpload',
+	'allowFileUploadRemote',
+	'allowFileRemove',
+	'allowFileRename',
+	'allowFolders',
+	'allowFolderMove',
+	'allowFolderCreate',
+	'allowFolderRemove',
+	'allowFolderRename',
+	'allowImageResize',
+	'allowImageCrop'
 ];
 
 export default class dataProvider implements IFileBrowserDataProvider {
@@ -44,8 +44,8 @@ export default class dataProvider implements IFileBrowserDataProvider {
 
 		return (
 			this.__currentPermissions === null ||
-			(this.__currentPermissions[rule] === undefined ||
-				this.__currentPermissions[rule])
+			this.__currentPermissions[rule] === undefined ||
+			this.__currentPermissions[rule]
 		);
 	}
 
@@ -116,7 +116,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		this.options.permissions.data.source = source;
 
 		if (this.options.permissions.url) {
-			return this.get('permissions').then(resp => {
+			return this.get('permissions').then((resp) => {
 				let process:
 					| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
 					| undefined = (this.options.permissions as any).process;
@@ -235,7 +235,7 @@ export default class dataProvider implements IFileBrowserDataProvider {
 		this.options.create.data.path = path;
 		this.options.create.data.name = name;
 
-		return this.get('create').then(resp => {
+		return this.get('create').then((resp) => {
 			this.currentPath = path;
 			this.currentSource = source;
 			return resp;

@@ -82,15 +82,15 @@ Config.prototype.controls.link = {
 					'" type="text"/>' +
 					(editor.options.link.openInNewTabCheckbox
 						? '<label>' +
-						  '<input name="target" type="checkbox"/> ' +
-						  editor.i18n('Open in new tab') +
-						  '</label>'
+							'<input name="target" type="checkbox"/> ' +
+							editor.i18n('Open in new tab') +
+							'</label>'
 						: '') +
 					(editor.options.link.noFollowCheckbox
 						? '<label>' +
-						  '<input name="nofollow" type="checkbox"/> ' +
-						  editor.i18n('No follow') +
-						  '</label>'
+							'<input name="nofollow" type="checkbox"/> ' +
+							editor.i18n('No follow') +
+							'</label>'
 						: '') +
 					'<div style="text-align: right">' +
 					'<button class="jodit_unlink_button" type="button">' +
@@ -119,16 +119,16 @@ Config.prototype.controls.link = {
 			val(form, 'input[name=text]', current.innerText);
 
 			if (editor.options.link.openInNewTabCheckbox) {
-				(form.querySelector(
-					'input[name=target]'
-				) as HTMLInputElement).checked =
-					current.getAttribute('target') === '_blank';
+				(
+					form.querySelector('input[name=target]') as HTMLInputElement
+				).checked = current.getAttribute('target') === '_blank';
 			}
 			if (editor.options.link.noFollowCheckbox) {
-				(form.querySelector(
-					'input[name=nofollow]'
-				) as HTMLInputElement).checked =
-					current.getAttribute('rel') === 'nofollow';
+				(
+					form.querySelector(
+						'input[name=nofollow]'
+					) as HTMLInputElement
+				).checked = current.getAttribute('rel') === 'nofollow';
 			}
 			if (lnk) {
 				lnk.innerHTML = editor.i18n('Update');
@@ -167,12 +167,12 @@ Config.prototype.controls.link = {
 				editor.editorDocument.createElement('a');
 
 			if (!val(form, 'input[name=url]')) {
-				(form.querySelector(
-					'input[name=url]'
-				) as HTMLInputElement).focus();
-				(form.querySelector(
-					'input[name=url]'
-				) as HTMLInputElement).classList.add('jodit_error');
+				(
+					form.querySelector('input[name=url]') as HTMLInputElement
+				).focus();
+				(
+					form.querySelector('input[name=url]') as HTMLInputElement
+				).classList.add('jodit_error');
 				return false;
 			}
 
@@ -181,9 +181,11 @@ Config.prototype.controls.link = {
 
 			if (editor.options.link.openInNewTabCheckbox) {
 				if (
-					(form.querySelector(
-						'input[name=target]'
-					) as HTMLInputElement).checked
+					(
+						form.querySelector(
+							'input[name=target]'
+						) as HTMLInputElement
+					).checked
 				) {
 					a.setAttribute('target', '_blank');
 				} else {
@@ -193,9 +195,11 @@ Config.prototype.controls.link = {
 
 			if (editor.options.link.noFollowCheckbox) {
 				if (
-					(form.querySelector(
-						'input[name=nofollow]'
-					) as HTMLInputElement).checked
+					(
+						form.querySelector(
+							'input[name=nofollow]'
+						) as HTMLInputElement
+					).checked
 				) {
 					a.setAttribute('rel', 'nofollow');
 				} else {
@@ -228,7 +232,7 @@ export function link(jodit: IJodit) {
 			jodit.events.on(
 				jodit.editor,
 				'dblclick',
-				function(this: HTMLAnchorElement, e: MouseEvent) {
+				function (this: HTMLAnchorElement, e: MouseEvent) {
 					const href: string | null = this.getAttribute('href');
 					if (href) {
 						location.href = href;
@@ -252,9 +256,8 @@ export function link(jodit: IJodit) {
 						) as HTMLAnchorElement;
 					}
 
-					const a: HTMLAnchorElement = jodit.create.inside.element(
-						'a'
-					);
+					const a: HTMLAnchorElement =
+						jodit.create.inside.element('a');
 
 					a.setAttribute('href', html);
 					a.innerText = html;
@@ -285,7 +288,9 @@ export function link(jodit: IJodit) {
 						);
 					} else {
 						newtag = jodit.editorDocument.createElement('span');
-						(newtag as HTMLElement).innerHTML = (node as HTMLElement).innerHTML;
+						(newtag as HTMLElement).innerHTML = (
+							node as HTMLElement
+						).innerHTML;
 					}
 
 					if (node.parentNode) {

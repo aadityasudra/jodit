@@ -43,7 +43,7 @@ Config.prototype.dialog = {
 Config.prototype.controls.dialog = {
 	close: {
 		icon: 'cancel',
-		exec: dialog => {
+		exec: (dialog) => {
 			(dialog as Dialog).close();
 		}
 	},
@@ -54,7 +54,7 @@ Config.prototype.controls.dialog = {
 				Config.prototype.controls.fullsize &&
 				Config.prototype.controls.fullsize.getLabel &&
 				typeof Config.prototype.controls.fullsize.getLabel ===
-				'function'
+					'function'
 			) {
 				return Config.prototype.controls.fullsize.getLabel(
 					editor,
@@ -63,7 +63,7 @@ Config.prototype.controls.dialog = {
 				);
 			}
 		},
-		exec: dialog => {
+		exec: (dialog) => {
 			dialog.toggleFullSize();
 		}
 	}
@@ -113,7 +113,7 @@ export class Dialog extends View {
 	) {
 		const elements_list: HTMLElement[] = [];
 
-		asArray(elements).forEach(elm => {
+		asArray(elements).forEach((elm) => {
 			const element: HTMLElement =
 				typeof elm === 'string' ? this.create.fromHTML(elm) : elm;
 
@@ -314,12 +314,10 @@ export class Dialog extends View {
 	 * @param {Number} [y] - Position px Vertical
 	 */
 	public setPosition(x?: number, y?: number) {
-		const
-			w: number = this.window.innerWidth,
+		const w: number = this.window.innerWidth,
 			h: number = this.window.innerHeight;
 
-		let
-			left: number = w / 2 - this.dialog.offsetWidth / 2,
+		let left: number = w / 2 - this.dialog.offsetWidth / 2,
 			top: number = h / 2 - this.dialog.offsetHeight / 2;
 
 		if (left < 0) {
@@ -438,7 +436,7 @@ export class Dialog extends View {
 		let maxzi: number = 0,
 			zIndex: number = 0;
 
-		$$('.jodit_dialog_box', this.destination).forEach(dialog => {
+		$$('.jodit_dialog_box', this.destination).forEach((dialog) => {
 			zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
 			maxzi = Math.max(isNaN(zIndex) ? 0 : zIndex, maxzi);
 		});
@@ -464,11 +462,11 @@ export class Dialog extends View {
 		[this.destination, this.destination.parentNode].forEach(
 			(box: Node | null) => {
 				box &&
-				(box as HTMLElement).classList &&
-				(box as HTMLElement).classList.toggle(
-					'jodit_fullsize_box',
-					condition
-				);
+					(box as HTMLElement).classList &&
+					(box as HTMLElement).classList.toggle(
+						'jodit_fullsize_box',
+						condition
+					);
 			}
 		);
 
@@ -595,8 +593,8 @@ export class Dialog extends View {
 		}
 
 		this.container &&
-		this.container.classList &&
-		this.container.classList.remove('active');
+			this.container.classList &&
+			this.container.classList.remove('active');
 
 		if (this.iSetMaximization) {
 			this.maximization(false);
@@ -641,21 +639,21 @@ export class Dialog extends View {
 
 		self.container = this.create.fromHTML(
 			'<div style="z-index:' +
-			self.options.zIndex +
-			'" class="jodit jodit_dialog_box">' +
-			'<div class="jodit_dialog_overlay"></div>' +
-			'<div class="jodit_dialog">' +
-			'<div class="jodit_dialog_header non-selected">' +
-			'<div class="jodit_dialog_header-title"></div>' +
-			'<div class="jodit_dialog_header-toolbar"></div>' +
-			'</div>' +
-			'<div class="jodit_dialog_content"></div>' +
-			'<div class="jodit_dialog_footer"></div>' +
-			(self.options.resizable
-				? '<div class="jodit_dialog_resizer"></div>'
-				: '') +
-			'</div>' +
-			'</div>'
+				self.options.zIndex +
+				'" class="jodit jodit_dialog_box">' +
+				'<div class="jodit_dialog_overlay"></div>' +
+				'<div class="jodit_dialog">' +
+				'<div class="jodit_dialog_header non-selected">' +
+				'<div class="jodit_dialog_header-title"></div>' +
+				'<div class="jodit_dialog_header-toolbar"></div>' +
+				'</div>' +
+				'<div class="jodit_dialog_content"></div>' +
+				'<div class="jodit_dialog_footer"></div>' +
+				(self.options.resizable
+					? '<div class="jodit_dialog_resizer"></div>'
+					: '') +
+				'</div>' +
+				'</div>'
 		) as HTMLDivElement;
 
 		if (jodit && (<IViewBased>jodit).id) {
@@ -711,10 +709,10 @@ export class Dialog extends View {
 		);
 
 		headerBox &&
-		headerBox.addEventListener(
-			'mousedown',
-			self.onHeaderMouseDown.bind(self)
-		);
+			headerBox.addEventListener(
+				'mousedown',
+				self.onHeaderMouseDown.bind(self)
+			);
 
 		if (self.options.resizable) {
 			self.resizer.addEventListener(

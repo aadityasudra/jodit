@@ -14,10 +14,15 @@ import { IJodit } from '../../../types';
  *
  *
  */
-export const isJoditObject = (jodit: unknown): jodit is IJodit  => {
-    if (jodit && jodit instanceof Object && typeof jodit.constructor === 'function' && jodit.constructor.name === 'Jodit') {
-        return true;
-    }
+export const isJoditObject = (jodit: unknown): jodit is IJodit => {
+	if (
+		jodit &&
+		jodit instanceof Object &&
+		typeof jodit.constructor === 'function' &&
+		jodit.constructor.name === 'Jodit'
+	) {
+		return true;
+	}
 
-    return false;
+	return false;
 };

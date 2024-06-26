@@ -84,7 +84,7 @@ export namespace Widget {
 			eachColor = (colors: string[] | IDictionary<string[]>) => {
 				const stack: string[] = [];
 				if (isPlainObject(colors)) {
-					Object.keys(colors).forEach(key => {
+					Object.keys(colors).forEach((key) => {
 						stack.push(
 							'<div class="jodit_colorpicker_group jodit_colorpicker_group-' +
 								key +
@@ -94,7 +94,7 @@ export namespace Widget {
 						stack.push('</div>');
 					});
 				} else if (Array.isArray(colors)) {
-					colors.forEach(color => {
+					colors.forEach((color) => {
 						stack.push(
 							'<a ' +
 								(valueHex === color ? ' class="active" ' : '') +
@@ -250,16 +250,14 @@ export namespace Widget {
 				tab: HTMLElement;
 			}> = {};
 
-		let
-			firstTab: string = '',
+		let firstTab: string = '',
 			tabcount: number = 0;
 
 		box.appendChild(buttons);
 		box.appendChild(tabBox);
 
 		each<(() => void) | HTMLElement>(tabs, (name: string, tabOptions) => {
-			const
-				tab = editor.create.div('jodit_tab'),
+			const tab = editor.create.div('jodit_tab'),
 				button = editor.create.element('a', {
 					href: 'javascript:void(0);'
 				});
@@ -268,7 +266,9 @@ export namespace Widget {
 				firstTab = name.toString();
 			}
 
-			button.innerHTML = /<svg/.test(name.toString()) ? name : editor.i18n(name.toString());
+			button.innerHTML = /<svg/.test(name.toString())
+				? name
+				: editor.i18n(name.toString());
 			buttons.appendChild(button);
 
 			if (typeof tabOptions !== 'function') {
@@ -280,10 +280,10 @@ export namespace Widget {
 			tabBox.appendChild(tab);
 
 			editor.events.on(button, 'mousedown touchend', (e: MouseEvent) => {
-				$$('a', buttons).forEach(a => {
+				$$('a', buttons).forEach((a) => {
 					a.classList.remove('active');
 				});
-				$$('.jodit_tab', tabBox).forEach(a => {
+				$$('.jodit_tab', tabBox).forEach((a) => {
 					a.classList.remove('active');
 				});
 
@@ -315,7 +315,7 @@ export namespace Widget {
 			return box;
 		}
 
-		$$('a', buttons).forEach(a => {
+		$$('a', buttons).forEach((a) => {
 			a.style.width = (100 / tabcount).toFixed(10) + '%';
 		});
 
@@ -441,9 +441,9 @@ export namespace Widget {
 				tabs[icon + editor.i18n('Browse')] = () => {
 					close && close();
 					if (callbacks.filebrowser) {
-						(editor.getInstance(
-							'FileBrowser'
-						) as IFileBrowser).open(callbacks.filebrowser, isImage);
+						(
+							editor.getInstance('FileBrowser') as IFileBrowser
+						).open(callbacks.filebrowser, isImage);
 					}
 				};
 			}

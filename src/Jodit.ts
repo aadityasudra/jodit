@@ -357,8 +357,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.setNativeEditorValue(value);
 		}
 
-		const
-			old_value = this.getElementValue(),
+		const old_value = this.getElementValue(),
 			new_value = this.getEditorValue();
 
 		if (
@@ -444,7 +443,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	registerHotkeyToCommand(hotkeys: string | string[], commandName: string) {
 		const shortcuts: string = asArray(hotkeys)
 			.map(normalizeKeyAliases)
-			.map(hotkey => hotkey + '.hotkey')
+			.map((hotkey) => hotkey + '.hotkey')
 			.join(' ');
 
 		this.events.off(shortcuts).on(shortcuts, () => {
@@ -692,7 +691,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			this.storage.set('jodit_default_mode', this.mode);
 		}
 
-		modeClasses.forEach(className => {
+		modeClasses.forEach((className) => {
 			this.container.classList.remove(className);
 		});
 
@@ -828,7 +827,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (process.env.NODE_ENV !== 'production' && language !== 'en') {
-				throw new Error(`i18n need "${key}" in "${language}"`);
+			throw new Error(`i18n need "${key}" in "${language}"`);
 		}
 
 		return parse(key);
@@ -951,8 +950,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		) {
 			throw new Error(
 				'Element "' +
-				element +
-				'" should be string or HTMLElement instance'
+					element +
+					'" should be string or HTMLElement instance'
 			);
 		}
 
@@ -1054,7 +1053,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		const bs = this.options.toolbarButtonSize.toLowerCase();
 		this.container.classList.add(
-			'jodit_toolbar_size-' + (['middle', 'large', 'small'].indexOf(bs) !== -1 ? bs : 'middle')
+			'jodit_toolbar_size-' +
+				(['middle', 'large', 'small'].indexOf(bs) !== -1
+					? bs
+					: 'middle')
 		);
 
 		if (this.options.textIcons) {
@@ -1161,9 +1163,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		let mode: number = this.options.defaultMode;
 
 		if (this.options.saveModeInStorage) {
-			const localMode: string | null = this.storage.get(
-				'jodit_default_mode'
-			);
+			const localMode: string | null =
+				this.storage.get('jodit_default_mode');
 			if (localMode !== null) {
 				mode = parseInt(localMode, 10);
 			}
@@ -1186,8 +1187,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				false,
 				this.options.enter.toLowerCase()
 			);
-		} catch {
-		}
+		} catch {}
 
 		// fix for native resizing
 		try {
@@ -1244,7 +1244,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			.on(
 				this.editor,
 				'selectionchange selectionstart keydown keyup keypress mousedown mouseup mousepress ' +
-				'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
 				(event: Event): false | void => {
 					if (this.options.readonly) {
 						return;

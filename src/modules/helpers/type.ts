@@ -32,7 +32,7 @@ export const hasOwn = class2type.hasOwnProperty;
 	'DocumentFragment',
 	'DOMStringList',
 	'HTMLCollection'
-].forEach(name => {
+].forEach((name) => {
 	class2type['[object ' + name + ']'] = name.toLowerCase();
 });
 

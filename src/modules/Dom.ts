@@ -162,7 +162,7 @@ export class Dom {
 				) {
 					return false;
 				}
-				node = Dom.next(node, nd => !!nd, elm);
+				node = Dom.next(node, (nd) => !!nd, elm);
 			}
 		}
 
@@ -203,7 +203,7 @@ export class Dom {
 		}
 
 		if (withAttributes) {
-			Array.from(elm.attributes).forEach(attr => {
+			Array.from(elm.attributes).forEach((attr) => {
 				tag.setAttribute(attr.name, attr.value);
 			});
 		}
@@ -253,22 +253,19 @@ export class Dom {
 
 		return (
 			!node.nodeName.toLowerCase().match(condNoEmptyElement) &&
-			Dom.each(
-				node as HTMLElement,
-				(elm: Node | null): false | void => {
-					if (
-						(elm &&
-							elm.nodeType === Node.TEXT_NODE &&
-							(elm.nodeValue !== null &&
-								trim(elm.nodeValue).length !== 0)) ||
-						(elm &&
-							elm.nodeType === Node.ELEMENT_NODE &&
-							condNoEmptyElement.test(elm.nodeName.toLowerCase()))
-					) {
-						return false;
-					}
+			Dom.each(node as HTMLElement, (elm: Node | null): false | void => {
+				if (
+					(elm &&
+						elm.nodeType === Node.TEXT_NODE &&
+						elm.nodeValue !== null &&
+						trim(elm.nodeValue).length !== 0) ||
+					(elm &&
+						elm.nodeType === Node.ELEMENT_NODE &&
+						condNoEmptyElement.test(elm.nodeName.toLowerCase()))
+				) {
+					return false;
 				}
-			)
+			})
 		);
 	}
 
@@ -417,7 +414,7 @@ export class Dom {
 	): HTMLElement | false {
 		return <HTMLElement | false>this.prev(
 			node,
-			node => {
+			(node) => {
 				return (
 					node &&
 					node.nodeType === Node.ELEMENT_NODE &&
@@ -434,7 +431,7 @@ export class Dom {
 	): HTMLElement | false {
 		return <HTMLElement | false>this.next(
 			node,
-			node => {
+			(node) => {
 				return (
 					node &&
 					node.nodeType === Node.ELEMENT_NODE &&
@@ -729,7 +726,7 @@ export class Dom {
 			nodes = nodes.reverse();
 		}
 
-		nodes.forEach(child => {
+		nodes.forEach((child) => {
 			Dom.all(child, condition, prev);
 		});
 	}

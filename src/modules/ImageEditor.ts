@@ -413,14 +413,14 @@ export class ImageEditor extends Component {
 
 		// btn group
 
-		$$('.jodit_btn_group', self.editor).forEach(group => {
+		$$('.jodit_btn_group', self.editor).forEach((group) => {
 			const input: HTMLInputElement = group.querySelector(
 				'input'
 			) as HTMLInputElement;
 			self.jodit.events.on(
 				group,
 				'click change',
-				function(this: HTMLButtonElement) {
+				function (this: HTMLButtonElement) {
 					const button: HTMLButtonElement = this as HTMLButtonElement;
 					$$('button', group).forEach((buttonElm: HTMLElement) =>
 						buttonElm.classList.remove('active')
@@ -437,21 +437,22 @@ export class ImageEditor extends Component {
 			.on(
 				this.editor,
 				'click.jodit_image_editor',
-				function(this: HTMLElement) {
+				function (this: HTMLElement) {
 					$$(
 						'.jodit_image_editor_slider,.jodit_image_editor_area',
 						self.editor
-					).forEach(elm => elm.classList.remove('active'));
+					).forEach((elm) => elm.classList.remove('active'));
 					const slide: HTMLElement = this.parentNode as HTMLElement;
 					slide.classList.add('active');
 					self.activeTab =
 						<ImageAction>slide.getAttribute('data-area') ||
 						'resize';
 
-					const tab: HTMLDivElement | null = self.editor.querySelector(
-						'.jodit_image_editor_area.jodit_image_editor_area_' +
-							self.activeTab
-					);
+					const tab: HTMLDivElement | null =
+						self.editor.querySelector(
+							'.jodit_image_editor_area.jodit_image_editor_area_' +
+								self.activeTab
+						);
 					if (tab) {
 						tab.classList.add('active');
 					}
@@ -505,18 +506,18 @@ export class ImageEditor extends Component {
 				}, 200)
 			);
 
-		const rationResizeButton: HTMLInputElement | null = self.editor.querySelector(
-			'.jodit_image_editor_keep_spect_ratio'
-		);
+		const rationResizeButton: HTMLInputElement | null =
+			self.editor.querySelector('.jodit_image_editor_keep_spect_ratio');
 		if (rationResizeButton) {
 			rationResizeButton.addEventListener('change', () => {
 				self.resizeUseRatio = rationResizeButton.checked;
 			});
 		}
 		// use ratio
-		const rationCropButton: HTMLInputElement | null = self.editor.querySelector(
-			'.jodit_image_editor_keep_spect_ratio_crop'
-		);
+		const rationCropButton: HTMLInputElement | null =
+			self.editor.querySelector(
+				'.jodit_image_editor_keep_spect_ratio_crop'
+			);
 		if (rationCropButton) {
 			rationCropButton.addEventListener('change', () => {
 				self.cropUseRatio = rationCropButton.checked;
@@ -583,8 +584,8 @@ export class ImageEditor extends Component {
 				self.updateCropBox();
 			});
 
-		self.buttons.forEach(button => {
-			button.addEventListener('mousedown', e => {
+		self.buttons.forEach((button) => {
+			button.addEventListener('mousedown', (e) => {
 				e.stopImmediatePropagation();
 			});
 			button.addEventListener('click', () => {
@@ -632,8 +633,10 @@ export class ImageEditor extends Component {
 								width: null,
 								height: null
 							});
-							self.widthInput.value = self.naturalWidth.toString();
-							self.heightInput.value = self.naturalHeight.toString();
+							self.widthInput.value =
+								self.naturalWidth.toString();
+							self.heightInput.value =
+								self.naturalHeight.toString();
 							self.jodit.events.fire(
 								self.resizeHandler,
 								'updatesize'
@@ -708,7 +711,7 @@ export class ImageEditor extends Component {
 			failed: (error: Error) => void
 		) => void
 	): Promise<Dialog> => {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			const timestamp = new Date().getTime();
 
 			this.image = this.jodit.create.element('img');
@@ -832,8 +835,8 @@ export class ImageEditor extends Component {
 					: '') +
 				(this.options.crop
 					? '<div class="jodit_image_editor_area jodit_image_editor_area_crop' +
-					  (!this.options.resize ? ' active' : '') +
-					  '">\
+						(!this.options.resize ? ' active' : '') +
+						'">\
                                 <div class="jodit_image_editor_box">\
                                     <div class="jodit_image_editor_croper">\
                                         <i class="jodit_bottomright"></i>\
@@ -847,41 +850,41 @@ export class ImageEditor extends Component {
 				(this.options.resize
 					? '<div data-area="resize" class="jodit_image_editor_slider active">\
                                 <div class="jodit_image_editor_slider-title">' +
-					  ToolbarIcon.getIcon('resize') +
-					  editor.i18n('Resize') +
-					  '</div>\
+						ToolbarIcon.getIcon('resize') +
+						editor.i18n('Resize') +
+						'</div>\
                                 <div class="jodit_image_editor_slider-content">\
                                     <div class="jodit_form_group">\
                                         <label for="jodit_image_editor_width">' +
-					  editor.i18n('Width') +
-					  '</label>\
+						editor.i18n('Width') +
+						'</label>\
                                         <input type="number" class="jodit_image_editor_width"/>\
                                     </div>\
                                     <div class="jodit_form_group">\
                                         <label for="jodit_image_editor_height">' +
-					  editor.i18n('Height') +
-					  '</label>\
+						editor.i18n('Height') +
+						'</label>\
                                         <input type="number" class="jodit_image_editor_height"/>\
                                     </div>\
                                     <div class="jodit_form_group">\
                                         <label>' +
-					  editor.i18n('Keep Aspect Ratio') +
-					  '</label>\
+						editor.i18n('Keep Aspect Ratio') +
+						'</label>\
                                         <div class="jodit_btn_group jodit_btn_radio_group">\
                                             <input ' +
-					  (this.resizeUseRatio ? 'checked' : '') +
-					  ' type="checkbox" class="jodit_image_editor_keep_spect_ratio"/>\
+						(this.resizeUseRatio ? 'checked' : '') +
+						' type="checkbox" class="jodit_image_editor_keep_spect_ratio"/>\
                                             <button type="button"  data-yes="1" \
                                                 class="jodit_col6 jodit_btn jodit_btn_success ' +
-					  (this.resizeUseRatio ? 'active' : '') +
-					  '">' +
-					  editor.i18n('Yes') +
-					  '</button>\
+						(this.resizeUseRatio ? 'active' : '') +
+						'">' +
+						editor.i18n('Yes') +
+						'</button>\
                                             <button type="button" class="jodit_col6 jodit_btn' +
-					  (!this.resizeUseRatio ? 'active' : '') +
-					  '">' +
-					  editor.i18n('No') +
-					  '</button>\
+						(!this.resizeUseRatio ? 'active' : '') +
+						'">' +
+						editor.i18n('No') +
+						'</button>\
                                         </div>\
                                     </div>\
                                 </div>\
@@ -889,32 +892,32 @@ export class ImageEditor extends Component {
 					: '') +
 				(this.options.crop
 					? '<div data-area="crop" class="jodit_image_editor_slider' +
-					  (!this.options.resize ? ' active' : '') +
-					  '">\
+						(!this.options.resize ? ' active' : '') +
+						'">\
                                 <div class="jodit_image_editor_slider-title">' +
-					  ToolbarIcon.getIcon('crop') +
-					  editor.i18n('Crop') +
-					  '</div>\
+						ToolbarIcon.getIcon('crop') +
+						editor.i18n('Crop') +
+						'</div>\
                                 <div class="jodit_image_editor_slider-content">\
                                     <div class="jodit_form_group">\
                                         <label>' +
-					  editor.i18n('Keep Aspect Ratio') +
-					  '</label>\
+						editor.i18n('Keep Aspect Ratio') +
+						'</label>\
                                         <div class="jodit_btn_group jodit_btn_radio_group">\
                                             <input ' +
-					  (this.cropUseRatio ? 'checked' : '') +
-					  ' type="checkbox" class="jodit_image_editor_keep_spect_ratio_crop"/>\
+						(this.cropUseRatio ? 'checked' : '') +
+						' type="checkbox" class="jodit_image_editor_keep_spect_ratio_crop"/>\
                                             <button type="button" data-yes="1" \
                                                 class="jodit_col6 jodit_btn jodit_btn_success ' +
-					  (this.cropUseRatio ? 'active' : '') +
-					  '">' +
-					  editor.i18n('Yes') +
-					  '</button>\
+						(this.cropUseRatio ? 'active' : '') +
+						'">' +
+						editor.i18n('Yes') +
+						'</button>\
                                             <button type="button" class="jodit_col6 jodit_btn ' +
-					  (!this.cropUseRatio ? 'active' : '') +
-					  '">' +
-					  editor.i18n('No') +
-					  '</button>\
+						(!this.cropUseRatio ? 'active' : '') +
+						'">' +
+						editor.i18n('No') +
+						'</button>\
                                         </div>\
                                     </div>\
                                 </div>\

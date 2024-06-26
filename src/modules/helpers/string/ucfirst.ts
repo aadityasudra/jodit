@@ -7,7 +7,6 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
 /**
  * Make a string's first character uppercase
  *
@@ -19,5 +18,5 @@ export const ucfirst = (value: string): string => {
 		return '';
 	}
 
-	return value[0].toUpperCase() + value.substr(1)
+	return value[0].toUpperCase() + value.substr(1);
 };

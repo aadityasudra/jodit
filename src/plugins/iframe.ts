@@ -155,34 +155,38 @@ export function iframe(editor: IJodit) {
 		.on(
 			'generateDocumentStructure.iframe',
 			(__doc: Document | undefined, jodit: IJodit) => {
-				const
-					doc = __doc || ((jodit.iframe as HTMLIFrameElement).contentWindow as Window).document;
+				const doc =
+					__doc ||
+					(
+						(jodit.iframe as HTMLIFrameElement)
+							.contentWindow as Window
+					).document;
 
 				doc.open();
 				doc.write(
 					'<!DOCTYPE html>' +
-					'<html dir="' +
-					jodit.options.direction +
-					'" class="jodit" ' +
-					'lang="' +
-					defaultLanguage(jodit.options.language) +
-					'">' +
-					'<head>' +
-					'<title>Jodit Editor</title>' +
-					(jodit.options.iframeBaseUrl
-						? '<base href="' +
-						jodit.options.iframeBaseUrl +
-						'"/>'
-						: '') +
-					'</head>' +
-					'<body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>' +
-					'</html>'
+						'<html dir="' +
+						jodit.options.direction +
+						'" class="jodit" ' +
+						'lang="' +
+						defaultLanguage(jodit.options.language) +
+						'">' +
+						'<head>' +
+						'<title>Jodit Editor</title>' +
+						(jodit.options.iframeBaseUrl
+							? '<base href="' +
+								jodit.options.iframeBaseUrl +
+								'"/>'
+							: '') +
+						'</head>' +
+						'<body class="jodit_wysiwyg" style="outline:none" contenteditable="true"></body>' +
+						'</html>'
 				);
 
 				doc.close();
 
 				if (jodit.options.iframeCSSLinks) {
-					jodit.options.iframeCSSLinks.forEach(href => {
+					jodit.options.iframeCSSLinks.forEach((href) => {
 						const link = doc.createElement('link');
 
 						link.setAttribute('rel', 'stylesheet');
@@ -236,7 +240,7 @@ export function iframe(editor: IJodit) {
 
 			if (editor.options.height === 'auto') {
 				doc.documentElement &&
-				(doc.documentElement.style.overflowY = 'hidden');
+					(doc.documentElement.style.overflowY = 'hidden');
 
 				const resizeIframe = throttle(() => {
 					if (
@@ -265,7 +269,7 @@ export function iframe(editor: IJodit) {
 					.on(doc, 'readystatechange DOMContentLoaded', resizeIframe);
 			}
 
-			(e => {
+			((e) => {
 				e.matches || (e.matches = Element.prototype.matches); // fix inside iframe polifill
 			})((editor.editorWindow as any).Element.prototype);
 
@@ -287,8 +291,8 @@ export function iframe(editor: IJodit) {
 						'mousedown touchstart keydown keyup touchend click mouseup mousemove scroll',
 						(e: Event) => {
 							editor.events &&
-							editor.events.fire &&
-							editor.events.fire(editor.ownerWindow, e);
+								editor.events.fire &&
+								editor.events.fire(editor.ownerWindow, e);
 						}
 					);
 			}

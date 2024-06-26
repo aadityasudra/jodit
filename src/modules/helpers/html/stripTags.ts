@@ -13,7 +13,7 @@
  * @param html
  */
 export const stripTags = (html: string): string => {
-    const tmp: HTMLDivElement = document.createElement('div');
-    tmp.innerHTML = html;
-    return tmp.textContent || '';
+	const tmp: HTMLDivElement = document.createElement('div');
+	tmp.innerHTML = html;
+	return tmp.textContent || '';
 };

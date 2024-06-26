@@ -13,7 +13,7 @@
  * @return {string}
  */
 export const fromCamelCase = (key: string): string => {
-    return key.replace(/([A-Z]+)/g, (m, letter) => {
-        return '-' + letter.toLowerCase();
-    });
+	return key.replace(/([A-Z]+)/g, (m, letter) => {
+		return '-' + letter.toLowerCase();
+	});
 };

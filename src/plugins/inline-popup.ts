@@ -39,9 +39,9 @@ Config.prototype.popup = {
 			name: 'eye',
 			tooltip: 'Open link',
 			exec: (editor: IJodit, current: Node) => {
-				const href:
-					| string
-					| null = (current as HTMLElement).getAttribute('href');
+				const href: string | null = (
+					current as HTMLElement
+				).getAttribute('href');
 
 				if (current && href) {
 					editor.ownerWindow.open(href);
@@ -96,7 +96,9 @@ Config.prototype.popup = {
 		{
 			name: 'pencil',
 			exec(editor: IJodit, current: Node) {
-				const tagName: string = (current as HTMLElement).tagName.toLowerCase();
+				const tagName: string = (
+					current as HTMLElement
+				).tagName.toLowerCase();
 				if (tagName === 'img') {
 					editor.events.fire('openImageProperties', current);
 				}
@@ -112,7 +114,9 @@ Config.prototype.popup = {
 				image: HTMLImageElement,
 				control: IControlType
 			) => {
-				const tagName: string = (image as HTMLElement).tagName.toLowerCase();
+				const tagName: string = (
+					image as HTMLElement
+				).tagName.toLowerCase();
 				if (tagName !== 'img') {
 					return;
 				}
@@ -135,7 +139,9 @@ Config.prototype.popup = {
 				image: HTMLImageElement,
 				control: IControlType
 			) => {
-				const tagName: string = (image as HTMLElement).tagName.toLowerCase();
+				const tagName: string = (
+					image as HTMLElement
+				).tagName.toLowerCase();
 				if (tagName !== 'img') {
 					return;
 				}
@@ -191,9 +197,8 @@ Config.prototype.popup = {
 		{
 			name: 'brush',
 			popup: (editor: IJodit, elm: HTMLTableElement) => {
-				const selected: HTMLTableCellElement[] = Table.getAllSelectedCells(
-					elm
-				);
+				const selected: HTMLTableCellElement[] =
+					Table.getAllSelectedCells(elm);
 
 				let $bg: HTMLElement,
 					$cl: HTMLElement,
@@ -407,8 +412,8 @@ export class inlinePopup extends Plugin {
 
 	private calcWindSizes = (): IBound => {
 		const win: Window = this.jodit.ownerWindow;
-		const docElement: HTMLElement | null = this.jodit.ownerDocument
-			.documentElement;
+		const docElement: HTMLElement | null =
+			this.jodit.ownerDocument.documentElement;
 
 		if (!docElement) {
 			return {
@@ -511,7 +516,7 @@ export class inlinePopup extends Plugin {
 	private isExcludedTarget(type: string): boolean {
 		return (
 			splitArray(this.jodit.options.toolbarInlineDisableFor)
-				.map(a => a.toLowerCase())
+				.map((a) => a.toLowerCase())
 				.indexOf(type.toLowerCase()) !== -1
 		);
 	}
@@ -603,7 +608,7 @@ export class inlinePopup extends Plugin {
 								event.target as Node,
 								elements,
 								this.jodit.editor
-						  ) as HTMLTableElement);
+							) as HTMLTableElement);
 
 			if (
 				!target ||
@@ -688,7 +693,7 @@ export class inlinePopup extends Plugin {
 				(_toolbar: ToolbarCollection): void | string[] => {
 					if (this.toolbar === _toolbar) {
 						return splitArray(editor.options.buttons)
-							.filter(name => name !== '|' && name !== '\n')
+							.filter((name) => name !== '|' && name !== '\n')
 							.filter((name: string) => {
 								return (
 									this.toolbar
@@ -708,9 +713,8 @@ export class inlinePopup extends Plugin {
 			.on(
 				'showPopup',
 				(elm: HTMLElement | string, rect: () => IBound) => {
-					const elementName: string = (typeof elm === 'string'
-						? elm
-						: elm.nodeName
+					const elementName: string = (
+						typeof elm === 'string' ? elm : elm.nodeName
 					).toLowerCase();
 
 					this.isSelectionPopup = false;

@@ -15,7 +15,8 @@ export default {
 		'有关许可证的信息，请访问我们的网站：',
 	'Buy full version': '购买完整版本',
 	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy.' + ' All rights reserved.',
+		'Copyright © XDSoft.net - Chupurnov Valeriy.' +
+		' All rights reserved.',
 
 	// Toolbar
 	Anchor: 'Anchor',
@@ -220,5 +221,5 @@ export default {
 	rename: '匈牙利',
 	'Enter new name': '输入新名称',
 	preview: '預習',
-	download: '下載',
+	download: '下載'
 } as IDictionary<string>;

@@ -28,36 +28,36 @@ import { setTimeout } from './setTimeout';
  * }, 100));
  * ```
  */
-export const debounce = function<T>(
-    this: T,
-    fn: CallbackFunction<T>,
-    timeout?: number,
-    invokeAsap?: boolean,
-    ctx?: T
+export const debounce = function <T>(
+	this: T,
+	fn: CallbackFunction<T>,
+	timeout?: number,
+	invokeAsap?: boolean,
+	ctx?: T
 ) {
-    if (arguments.length === 3 && typeof invokeAsap !== 'boolean') {
-        ctx = invokeAsap;
-        invokeAsap = false;
-    }
+	if (arguments.length === 3 && typeof invokeAsap !== 'boolean') {
+		ctx = invokeAsap;
+		invokeAsap = false;
+	}
 
-    let timer: number = 0;
+	let timer: number = 0;
 
-    return function(this: T) {
-        const args = arguments;
-        const context: T = ctx || this;
+	return function (this: T) {
+		const args = arguments;
+		const context: T = ctx || this;
 
-        if ((invokeAsap && !timer) || !timeout) {
-            fn.apply(context, args as any);
-        }
+		if ((invokeAsap && !timer) || !timeout) {
+			fn.apply(context, args as any);
+		}
 
-        if (timeout) {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                if (!invokeAsap) {
-                    fn.apply(context, args as any);
-                }
-                timer = 0;
-            }, timeout);
-        }
-    };
+		if (timeout) {
+			clearTimeout(timer);
+			timer = setTimeout(() => {
+				if (!invokeAsap) {
+					fn.apply(context, args as any);
+				}
+				timer = 0;
+			}, timeout);
+		}
+	};
 };

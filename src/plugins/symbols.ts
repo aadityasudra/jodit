@@ -245,9 +245,8 @@ Config.prototype.controls.symbol = {
 		);
 		if (container) {
 			if (editor.options.usePopupForSpecialCharacters) {
-				const box: HTMLDivElement = editor.ownerDocument.createElement(
-					'div'
-				);
+				const box: HTMLDivElement =
+					editor.ownerDocument.createElement('div');
 				box.classList.add('jodit_symbols');
 				box.appendChild(container);
 				editor.events.on(container, 'close_dialog', close);
@@ -259,9 +258,8 @@ Config.prototype.controls.symbol = {
 					void 0,
 					'jodit_symbols'
 				);
-				const a: HTMLAnchorElement | null = container.querySelector(
-					'a'
-				);
+				const a: HTMLAnchorElement | null =
+					container.querySelector('a');
 				a && a.focus();
 				editor.events.on('beforeDestruct', () => {
 					dialog && dialog.close();
@@ -307,9 +305,8 @@ export class symbols {
 					i < editor.options.specialCharacters.length;
 					j += 1, i += 1
 				) {
-					const td: HTMLTableCellElement = editor.create.element(
-							'td'
-						),
+					const td: HTMLTableCellElement =
+							editor.create.element('td'),
 						a: HTMLAnchorElement = editor.create.fromHTML(
 							`<a
                                     data-index="${i}"
@@ -330,28 +327,30 @@ export class symbols {
 			const self: symbols = this;
 
 			editor.events
-				.on(chars, 'focus', function(this: HTMLAnchorElement) {
+				.on(chars, 'focus', function (this: HTMLAnchorElement) {
 					preview.innerHTML = this.innerHTML;
 				})
-				.on(chars, 'mousedown', function(
-					this: HTMLAnchorElement,
-					e?: MouseEvent
-				) {
-					if (this && this.nodeName === 'A') {
-						editor.selection.focus();
-						editor.selection.insertHTML(this.innerHTML);
-						editor.events.fire(this, 'close_dialog');
-						e && e.preventDefault();
-						e && e.stopImmediatePropagation();
+				.on(
+					chars,
+					'mousedown',
+					function (this: HTMLAnchorElement, e?: MouseEvent) {
+						if (this && this.nodeName === 'A') {
+							editor.selection.focus();
+							editor.selection.insertHTML(this.innerHTML);
+							editor.events.fire(this, 'close_dialog');
+							e && e.preventDefault();
+							e && e.stopImmediatePropagation();
+						}
 					}
-				})
-				.on(chars, 'mouseenter', function(this: HTMLAnchorElement) {
+				)
+				.on(chars, 'mouseenter', function (this: HTMLAnchorElement) {
 					if (this && this.nodeName === 'A') {
 						this.focus();
 					}
 				})
 				.on(chars, 'keydown', (e: KeyboardEvent) => {
-					const target: HTMLAnchorElement = e.target as HTMLAnchorElement;
+					const target: HTMLAnchorElement =
+						e.target as HTMLAnchorElement;
 					if (target && target.nodeName === 'A') {
 						const index: number = parseInt(
 								target.getAttribute('data-index') || '0',
@@ -377,9 +376,9 @@ export class symbols {
 											? Math.floor(
 													chars.length /
 														self.countInRow
-											  ) *
+												) *
 													self.countInRow +
-											  jIndex
+												jIndex
 											: jIndex;
 
 									if (newIndex > chars.length - 1) {

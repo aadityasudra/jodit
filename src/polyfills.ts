@@ -15,14 +15,13 @@ import 'es6-promise/auto';
 		(e.matches =
 			(e as any).matchesSelector !== undefined
 				? (e as any).matchesSelector
-				: function(this: Element, selector: string) {
+				: function (this: Element, selector: string) {
 						if (!this.ownerDocument) {
 							return [];
 						}
 
-						const matches: NodeList | null = this.ownerDocument.querySelectorAll(
-								selector
-							),
+						const matches: NodeList | null =
+								this.ownerDocument.querySelectorAll(selector),
 							th = this;
 
 						return Array.prototype.some.call(
@@ -31,7 +30,7 @@ import 'es6-promise/auto';
 								return elm === th;
 							}
 						);
-				  });
+					});
 })(Element.prototype);
 
 if (!Array.from) {
@@ -45,5 +44,5 @@ if (!Array.from) {
 if (!Array.prototype.includes) {
 	Array.prototype.includes = function (value: any) {
 		return this.indexOf(value) > -1;
-	}
+	};
 }

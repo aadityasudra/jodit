@@ -41,7 +41,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => {
+					(elm) => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
 							(elm &&
@@ -69,7 +69,7 @@ Config.prototype.controls.fontsize = (<IControlType<IJodit>>{
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => {
+					(elm) => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
 							(elm &&
@@ -128,7 +128,7 @@ Config.prototype.controls.font = (<IControlType<IJodit>>{
 			const currentBpx: HTMLElement =
 				(Dom.closest(
 					current,
-					elm => {
+					(elm) => {
 						return (
 							Dom.isBlock(elm, editor.editorWindow) ||
 							(elm &&

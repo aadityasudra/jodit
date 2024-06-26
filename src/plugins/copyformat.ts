@@ -112,15 +112,13 @@ Config.prototype.controls.copyformat = {
 					Dom.safeRemove(ideal);
 				}
 
-				const format: IDictionary<
-					string | number | undefined
-				> = getStyles(editor, box, defaultStyles);
+				const format: IDictionary<string | number | undefined> =
+					getStyles(editor, box, defaultStyles);
 
 				const onMouseDown = () => {
 					editor.buffer[pluginKey] = false;
-					const currentNode:
-						| Node
-						| false = editor.selection.current();
+					const currentNode: Node | false =
+						editor.selection.current();
 
 					if (currentNode) {
 						if (currentNode.nodeName === 'IMG') {

@@ -68,7 +68,7 @@ export class ContextMenu extends Component {
 
 		this.context.innerHTML = '';
 
-		actions.forEach(item => {
+		actions.forEach((item) => {
 			if (!item) {
 				return;
 			}
@@ -98,7 +98,11 @@ export class ContextMenu extends Component {
 			top: y
 		});
 
-		this.jodit.events.on(this.jodit.ownerWindow, 'mouseup jodit_close_dialog', self.hide);
+		this.jodit.events.on(
+			this.jodit.ownerWindow,
+			'mouseup jodit_close_dialog',
+			self.hide
+		);
 
 		this.context.classList.add('jodit_context_menu-show');
 	}

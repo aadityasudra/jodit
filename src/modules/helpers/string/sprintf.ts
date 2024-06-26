@@ -10,8 +10,8 @@
 export const sprintf = (...args: Array<string | number>): string => {
 	let i: number = 0;
 
-	const
-		regex: RegExp = /%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g,
+	const regex: RegExp =
+			/%%|%(\d+\$)?([-+#0 ]*)(\*\d+\$|\*|\d+)?(\.(\*\d+\$|\*|\d+))?([scboxXuidfegEG])/g,
 		a: Array<string | number> = args,
 		format: string = a[i] as string;
 
@@ -70,8 +70,8 @@ export const sprintf = (...args: Array<string | number>): string => {
 				number &&
 				({ 2: '0b', 8: '0', 16: '0x' } as any)[base]) ||
 			'';
-		const
-			newValue: string = prefix + pad(number.toString(base), precision || 0, '0', false);
+		const newValue: string =
+			prefix + pad(number.toString(base), precision || 0, '0', false);
 
 		return justify(newValue, prefix, leftJustify, minWidth, zeroPad);
 	};
@@ -249,18 +249,20 @@ export const sprintf = (...args: Array<string | number>): string => {
 				const prefix = number < 0 ? '-' : positivePrefix;
 				const method = ['toExponential', 'toFixed', 'toPrecision'][
 					'efg'.indexOf(type.toLowerCase())
-					];
+				];
 				const textTransform = ['toString', 'toUpperCase'][
-				'eEfFgG'.indexOf(type) % 2
-					];
+					'eEfFgG'.indexOf(type) % 2
+				];
 				value = prefix + (Math.abs(number) as any)[method](precision);
-				return (justify(
-					value,
-					prefix,
-					leftJustify,
-					minWidth,
-					zeroPad
-				) as any)[textTransform]();
+				return (
+					justify(
+						value,
+						prefix,
+						leftJustify,
+						minWidth,
+						zeroPad
+					) as any
+				)[textTransform]();
 			}
 			default:
 				return substring;

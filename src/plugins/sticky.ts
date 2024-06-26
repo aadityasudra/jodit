@@ -118,11 +118,10 @@ export class sticky extends Plugin {
 					),
 					doSticky: boolean =
 						jodit.getMode() === MODE_WYSIWYG &&
-						(scrollWindowTop + jodit.options.toolbarStickyOffset >
+						scrollWindowTop + jodit.options.toolbarStickyOffset >
 							offsetEditor.top &&
-							scrollWindowTop +
-								jodit.options.toolbarStickyOffset <
-								offsetEditor.top + offsetEditor.height) &&
+						scrollWindowTop + jodit.options.toolbarStickyOffset <
+							offsetEditor.top + offsetEditor.height &&
 						!(
 							jodit.options.toolbarDisableStickyForMobile &&
 							this.isMobile()

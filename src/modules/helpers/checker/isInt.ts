@@ -7,7 +7,6 @@
  * Copyright (c) 2013-2019 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
 import { isNumeric } from './isNumeric';
 
 /**
@@ -15,9 +14,9 @@ import { isNumeric } from './isNumeric';
  * @param value
  */
 export const isInt = (value: number | string): boolean => {
-    if (typeof value === 'string' && isNumeric(value)) {
-        value = parseFloat(value);
-    }
+	if (typeof value === 'string' && isNumeric(value)) {
+		value = parseFloat(value);
+	}
 
-    return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
+	return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
 };

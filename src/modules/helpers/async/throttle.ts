@@ -28,36 +28,36 @@ import { setTimeout } from './setTimeout';
  * ```
  */
 export const throttle = <T>(
-    fn: CallbackFunction<T>,
-    timeout: number,
-    ctx?: T
+	fn: CallbackFunction<T>,
+	timeout: number,
+	ctx?: T
 ) => {
-    let timer: number | null = null,
-        args: IArguments,
-        needInvoke: boolean,
-        callee: () => void;
+	let timer: number | null = null,
+		args: IArguments,
+		needInvoke: boolean,
+		callee: () => void;
 
-    return function(this: any) {
-        args = arguments;
-        needInvoke = true;
-        const context: T = ctx || this;
+	return function (this: any) {
+		args = arguments;
+		needInvoke = true;
+		const context: T = ctx || this;
 
-        if (!timeout) {
-            fn.apply(context, args as any);
-            return;
-        }
+		if (!timeout) {
+			fn.apply(context, args as any);
+			return;
+		}
 
-        if (!timer) {
-            callee = () => {
-                if (needInvoke) {
-                    fn.apply(context, args as any);
-                    needInvoke = false;
-                    timer = setTimeout(callee, timeout);
-                } else {
-                    timer = null;
-                }
-            };
-            callee();
-        }
-    };
+		if (!timer) {
+			callee = () => {
+				if (needInvoke) {
+					fn.apply(context, args as any);
+					needInvoke = false;
+					timer = setTimeout(callee, timeout);
+				} else {
+					timer = null;
+				}
+			};
+			callee();
+		}
+	};
 };

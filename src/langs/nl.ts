@@ -229,5 +229,5 @@ export default {
 	rename: 'Hongaars',
 	'Enter new name': 'Voer een nieuwe naam in',
 	preview: 'voorvertoning',
-	download: 'Download',
+	download: 'Download'
 } as IDictionary<string>;
